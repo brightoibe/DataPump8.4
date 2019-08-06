@@ -40,6 +40,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.xml.XMLConstants;
@@ -1696,11 +1697,11 @@ public class NDRWriter {
 
     public String getRegimenCode(String regimen, int regimenLineConcept) {
         String code = null;
-        int[] firstLineArr={164506,164507};
-        int[] secondLineArr={164513,164514};
+        int[] firstLineArr = {164506, 164507};
+        int[] secondLineArr = {164513, 164514};
         Arrays.sort(firstLineArr);
         Arrays.sort(secondLineArr);
-        
+
         Set<String> set = mapRegimenToCodeDictionary.keySet();
         for (String ele : set) {
             if (isEquivalent(regimen, ele)) {
@@ -1708,10 +1709,10 @@ public class NDRWriter {
                 return code;
             }
         }
-        if (StringUtils.isEmpty(code) && (Arrays.binarySearch(firstLineArr, regimenLineConcept)>=0)) {
+        if (StringUtils.isEmpty(code) && (Arrays.binarySearch(firstLineArr, regimenLineConcept) >= 0)) {
             code = "1k";
         }
-        if (StringUtils.isEmpty(code) && (Arrays.binarySearch(secondLineArr, regimenLineConcept)>=0)) {
+        if (StringUtils.isEmpty(code) && (Arrays.binarySearch(secondLineArr, regimenLineConcept) >= 0)) {
             code = "2g";
         }
         return code;
@@ -1748,14 +1749,14 @@ public class NDRWriter {
         return indRpt;
     }
 
-    public PatientDemographicsType createPatientDemographics(Demographics patient, Location loc, ArrayList<Obs> obsList, LocationMap locMap) throws DatatypeConfigurationException {
+    public PatientDemographicsType createPatientDemographics(Demographics patient, Location loc, List<Obs> obsList, LocationMap locMap) throws DatatypeConfigurationException {
         PatientDemographicsType demo = new PatientDemographicsType();
         demo.setPatientIdentifier(patient.getPepfarID());
         IdentifierType idt = null;
         IdentifiersType idtss = new IdentifiersType();
-        String hospID = patient.getHospID();
+        String hospID = loc.getDatimID() + "-" + patient.getHospID();
         String otherID = patient.getOtherID();
-        String pepfarID = patient.getPepfarID();
+        String pepfarID = loc.getDatimID() + "-" + patient.getPepfarID();
         if (StringUtils.isNotEmpty(hospID)) {
             idt = new IdentifierType();
             idt.setIDNumber(hospID);
@@ -1872,7 +1873,7 @@ public class NDRWriter {
     }
 
     //public HIVEncounterType createHIVEncounter(int encounter_id, Date artStartDate, ArrayList<Obs> obsList, ArrayList<DrugOrder> orders, ArrayList<Obs> obsCd4List) throws DatatypeConfigurationException {
-    public HIVEncounterType createHIVEncounter(Visit visit, Date artStartDate, ArrayList<Obs> obsList, ArrayList<DrugOrder> orders, ArrayList<Drugs> drugList) throws DatatypeConfigurationException {
+    public HIVEncounterType createHIVEncounter(Visit visit, Date artStartDate, List<Obs> obsList, ArrayList<DrugOrder> orders, ArrayList<Drugs> drugList) throws DatatypeConfigurationException {
         HIVEncounterType hivEncType = new HIVEncounterType();
         Date visitDate = visit.getVisitDate();
         LocalDate d2 = new LocalDate(new DateTime(visitDate));
@@ -2004,7 +2005,7 @@ public class NDRWriter {
                         value_coded = obs.getValueCoded();
                         hivEncType.setNotedSideEffects(hivEncounterTypeDictionary.get(value_coded));
                         break;*/
-                    /*case 88:
+ /*case 88:
                         value_numeric = (int) obs.getValueNumeric();
                         hivEncType.setCD4(value_numeric);
                         hivEncType.setCD4TestDate(getXmlDate(obs.getVisitDate()));
@@ -2064,7 +2065,7 @@ public class NDRWriter {
                         value_coded = obs.getValueCoded();
                         hivEncType.setWhyPoorFairARVDrugAdherence(hivEncounterTypeDictionary.get(value_coded));
                         break;*/
-                    /*case 7778203:
+ /*case 7778203:
                         value_coded = obs.getValueCoded();
                         cst = new CodedSimpleType();
                         cst.setCode(hivEncounterTypeDictionary.get(value_coded));
@@ -2079,7 +2080,7 @@ public class NDRWriter {
                         value_coded = obs.getValueCoded();
                         hivEncType.setWhyPoorFairCotrimoxazoleDrugAdherence(hivEncounterTypeDictionary.get(value_coded));
                         break;*/
-                    /*case 7778202:
+ /*case 7778202:
                         value_coded = obs.getValueCoded();
                         cst = new CodedSimpleType();
                         cst.setCode(hivEncounterTypeDictionary.get(value_coded));
@@ -2104,7 +2105,7 @@ public class NDRWriter {
                             hivEncType.setNextAppointmentDate(getXmlDate(getNextAppointmentDate(obs.getVisitDate(), value_coded)));
                         }
                         break;*/
-                    /*case 77778364:
+ /*case 77778364:
                         value_coded = obs.getValueCoded();
                         if (hivEncType.getINHDose() == null) {
                             cst = new CodedSimpleType();
@@ -2112,7 +2113,7 @@ public class NDRWriter {
                             cst.setCodeDescTxt(obs.getVariableValue());
                             hivEncType.setINHDose(cst);
                         }*/
-                        
+
                     default:
                         break;
                 }
@@ -2193,7 +2194,7 @@ public class NDRWriter {
         return hivEncType;
     }
 
-    public String extractConceptCodes(int conceptID, ArrayList<Obs> obsList, HashMap<Integer, String> answerMap) {
+    public String extractConceptCodes(int conceptID, List<Obs> obsList, HashMap<Integer, String> answerMap) {
         String codedAnswer = "";
         String val = "";
         ArrayList<String> valList = new ArrayList<String>();
@@ -2288,7 +2289,6 @@ public class NDRWriter {
         for (DrugOrder ele : orders) {
             ele.setPepfarID(pts.getPepfarID());
             regimenType = createRegimenType(ele);
-
             regimenTypeList.add(regimenType);
         }
         return regimenTypeList;
@@ -2358,7 +2358,6 @@ public class NDRWriter {
                     cst.setCodeDescTxt(description);
                     prescribedRegimenTypeCode = "CTX";
                     regimenType = createRegimenType(pepfarID, startDate, stopDate, prescribedRegimenTypeCode, regimenLineCode, cst);
-
                 } else if (strength.contains("120mg")) {
                     code = "CTX120";
                     description = "Cotrimoxazole 120mg";
@@ -2496,7 +2495,7 @@ public class NDRWriter {
         return regimenType;
     }
 
-    public Obs extractConcept(int conceptID, ArrayList<Obs> obsList) {
+    public Obs extractConcept(int conceptID, List<Obs> obsList) {
         Obs obs = null;
         for (Obs ele : obsList) {
             if (ele.getConceptID() == conceptID) {
@@ -2528,7 +2527,7 @@ public class NDRWriter {
         labReport.setCollectionDate(getXmlDate(visitDate));
         //Obs labIDObs = extractConcept(7777905, obsList);
         //if (labIDObs != null) {
-         //   labReport.setLaboratoryTestIdentifier(labIDObs.getVariableValue());
+        //   labReport.setLaboratoryTestIdentifier(labIDObs.getVariableValue());
         //}
         labReport.setLaboratoryTestIdentifier(visit.getVisitID());
         Obs reportedByObs = extractConcept(164982, obsList);
@@ -2601,29 +2600,30 @@ public class NDRWriter {
                 }
                 answer.setAnswerNumeric(numeric);
                 result.setLaboratoryResult(answer);
-
                 labReport.getLaboratoryOrderAndResult().add(result);
             } else if (dataType == 2 && labTestDictionary.containsKey(conceptID)) {
                 cst = new CodedSimpleType();
                 value_coded = obs.getValueCoded();
-                cst.setCode(labTestDictionary.get(conceptID));
-                cst.setCodeDescTxt(c.getConceptName());
-                result = new LaboratoryOrderAndResult();
-                result.setLaboratoryResultedTest(cst);
-                answer = new AnswerType();
-                CodedType ct = new CodedType();
-                ct.setCode(conceptDictionary.get(value_coded).getConceptName());
-                ct.setCodeDescTxt(conceptDictionary.get(value_coded).getConceptName());
-                ct.setCodeSystemCode(conceptDictionary.get(value_coded).getConceptName());
-                answer.setAnswerCode(ct);
-                result.setLaboratoryResult(answer);
-                if (orderedDate != null) {
-                    result.setOrderedTestDate(getXmlDate(orderedDate));
+                if (conceptDictionary.containsKey(value_coded)) {
+                    cst.setCode(labTestDictionary.get(conceptID));
+                    cst.setCodeDescTxt(c.getConceptName());
+                    result = new LaboratoryOrderAndResult();
+                    result.setLaboratoryResultedTest(cst);
+                    answer = new AnswerType();
+                    CodedType ct = new CodedType();
+                    ct.setCode(conceptDictionary.get(value_coded).getConceptName());
+                    ct.setCodeDescTxt(conceptDictionary.get(value_coded).getConceptName());
+                    ct.setCodeSystemCode(conceptDictionary.get(value_coded).getConceptName());
+                    answer.setAnswerCode(ct);
+                    result.setLaboratoryResult(answer);
+                    if (orderedDate != null) {
+                        result.setOrderedTestDate(getXmlDate(orderedDate));
+                    }
+                    if (reportedDate != null) {
+                        result.setResultedTestDate(getXmlDate(reportedDate));
+                    }
+                    labReport.getLaboratoryOrderAndResult().add(result);
                 }
-                if (reportedDate != null) {
-                    result.setResultedTestDate(getXmlDate(reportedDate));
-                }
-                labReport.getLaboratoryOrderAndResult().add(result);
             }
 
         }
@@ -2698,11 +2698,11 @@ public class NDRWriter {
                         hiv.setMedicallyEligibleDate(getXmlDate(value_datetime));
                     }
                     break;*/
-                /*case 1731:
+ /*case 1731:
                     value_coded = obs.getValueCoded();
                     hiv.setReasonMedicallyEligible(hivQueDictionary.get(value_coded));
                     break;*/
-               /* case 7777862:
+ /* case 7777862:
                     value_datetime = obs.getValueDate();
                     hiv.setInitialAdherenceCounselingCompletedDate(getXmlDate(value_datetime));
                     break;*/

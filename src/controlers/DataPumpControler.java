@@ -25,9 +25,7 @@ public class DataPumpControler {
     public DataPumpControler(){
         dao=new DataPumpDao();
     }
-    public void connectToDB(){
-        
-    }
+    
     public DefaultComboBoxModel getExportTypeModel() {
         DefaultComboBoxModel comboBoxModel = new DefaultComboBoxModel();
         String[] export_types = {
