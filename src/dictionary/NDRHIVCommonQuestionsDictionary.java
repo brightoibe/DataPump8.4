@@ -24,6 +24,7 @@ public class NDRHIVCommonQuestionsDictionary {
      public CommonQuestionsType createCommonQuestionType(String hospID, List<Obs> obsList, Date firstVisitDate, Date lastVisitDate, boolean patientdiedfromillness, int age, String gender) throws DatatypeConfigurationException {
         CommonQuestionsType common = new CommonQuestionsType();
         common.setPatientDieFromThisIllness(patientdiedfromillness);
+        //common.
         common.setPatientAge(age);
         common.setHospitalNumber(hospID);
         if (firstVisitDate != null) {

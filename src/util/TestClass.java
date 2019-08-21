@@ -14,10 +14,12 @@ import model.Key;
  */
 public class TestClass {
     public static void main(String[] arg){
-        Key k1,k2;
-        k1=new Key(1,2);
-        k2=new Key(1,4);
-        System.out.println(k1.equals(k2));
+        //Key k1,k2;
+        //k1=new Key(1,2);
+        //k2=new Key(1,4);
+        int a=5;
+        a*=5;
+        System.out.println("a="+a);
        
     }
     public static int[] toArray(int... i){
