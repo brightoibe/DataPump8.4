@@ -867,9 +867,11 @@ public class NDRDemographicsDictionary {
         demo.setPatientIdentifier(patient.getPepfarID());
         IdentifierType idt = null;
         IdentifiersType idtss = new IdentifiersType();
-        String hospID = loc.getDatimID() + "-" + patient.getHospID();
-        String otherID = patient.getOtherID();
-        String pepfarID = loc.getDatimID() + "-" + patient.getPepfarID();
+       // String hospID = loc.getDatimID() + "-" + patient.getHospID();
+        String hospID=patient.getHospID();
+        String otherID=patient.getOtherID();
+        String pepfarID=patient.getPepfarID();
+        //String pepfarID = loc.getDatimID() + "-" + patient.getPepfarID();
         if (StringUtils.isNotEmpty(hospID)) {
             idt = new IdentifierType();
             idt.setIDNumber(hospID);
