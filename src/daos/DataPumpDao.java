@@ -1502,7 +1502,7 @@ public class DataPumpDao implements model.datapump.DataAccess {
                 + "	inner join `patient` on(`patient`.`patient_id` = `obs`.`person_id`)\n"
                 + "     inner join `encounter` on(`encounter`.`encounter_id` = `obs`.`encounter_id`)\n"
                 + "     inner join `encounter_provider` on(`encounter_provider`.encounter_id=encounter.encounter_id and encounter.voided=0)\n"
-                + "	where encounter.form_id in(22,14,21,23,20,27) and encounter.encounter_datetime=? and  encounter.patient_id=? and encounter.voided=0   order by obs.person_id\n"
+                + "	where encounter.form_id in(22,14,21,23,20,27) and CAST(encounter.encounter_datetime AS DATE)=? and  encounter.patient_id=? and encounter.voided=0   order by obs.person_id\n"
                 + "     	 ";
         PreparedStatement ps = null;
         ResultSet rs = null;
