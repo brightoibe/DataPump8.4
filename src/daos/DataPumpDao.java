@@ -2559,8 +2559,9 @@ public class DataPumpDao implements model.datapump.DataAccess {
                      from the Obs List.
          */
         int obsGroupID = getObsIDOfConceptInList(165724, 27, obsList, visitDate);
+        System.out.println("Obs ID of ARV Medication: "+obsGroupID);
         obsPin = getConceptForFormInGroup(159368, 27, obsList, visitDate, obsGroupID);
-
+        System.out.println("Obs ID of ARV Medication: "+obsGroupID);
         if (obsPin != null) {
             duration = (int) obsPin.getValueNumeric();
             durationUnit = "DAY(S)";
