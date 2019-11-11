@@ -2022,7 +2022,7 @@ public class DataPumpDao implements model.datapump.DataAccess {
     public model.datapump.Obs getConceptForForm(int conceptID, int formID, List<model.datapump.Obs> obsList, Date visitDate) {
         model.datapump.Obs obs = null;
         for (model.datapump.Obs ele : obsList) {
-            if (ele.getConceptID() == conceptID && ele.getVisitDate().equals(visitDate)) {
+            if (ele.getConceptID() == conceptID && ele.getVisitDate().equals(visitDate) && ele.getFormID()==formID) {
                 obs = ele;
             }
         }
@@ -2041,7 +2041,8 @@ public class DataPumpDao implements model.datapump.DataAccess {
     }
 
     public int getObsIDOfConceptInList(int conceptID, int formID, List<model.datapump.Obs> obsList, Date visitDate) {
-        Obs obs = getConceptForForm(conceptID, formID, obsList);
+        //Obs obs = getConceptForForm(conceptID, formID, obsList);
+        Obs obs=getConceptForForm(conceptID, formID, obsList, visitDate);
         int obsID = 0;
         if (obs != null) {
             obsID = obs.getObsID();
@@ -2564,7 +2565,7 @@ public class DataPumpDao implements model.datapump.DataAccess {
         int obsGroupID = getObsIDOfConceptInList(162240, 27, obsList, visitDate);
         System.out.println("Obs ID of ARV Medication: "+obsGroupID);
         obsPin = getConceptForFormInGroup(159368, 27, obsList, visitDate, obsGroupID);
-        //System.out.println("Prescribed regimen duration: "+obsPin.getValueNumeric());
+        System.out.println("Prescribed regimen duration: "+obsPin.getValueNumeric());
         if (obsPin != null) {
             duration = (int) obsPin.getValueNumeric();
             durationUnit = "DAY(S)";
