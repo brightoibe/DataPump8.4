@@ -99,6 +99,7 @@ import model.nigeriaqual.PediatricPatientStatus;
 import model.nigeriaqual.PediatricTuberculosis;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.Weeks;
@@ -2022,7 +2023,7 @@ public class DataPumpDao implements model.datapump.DataAccess {
     public model.datapump.Obs getConceptForForm(int conceptID, int formID, List<model.datapump.Obs> obsList, Date visitDate) {
         model.datapump.Obs obs = null;
         for (model.datapump.Obs ele : obsList) {
-            if (ele.getConceptID() == conceptID && ele.getVisitDate().equals(visitDate) && ele.getFormID()==formID) {
+            if (ele.getConceptID() == conceptID && DateUtils.isSameDay(ele.getVisitDate(),visitDate) && ele.getFormID()==formID) {
                 obs = ele;
             }
         }
@@ -2031,8 +2032,11 @@ public class DataPumpDao implements model.datapump.DataAccess {
 
     public model.datapump.Obs getConceptForFormInGroup(int conceptID, int formID, List<model.datapump.Obs> obsList, Date visitDate, int obsID) {
         model.datapump.Obs obs = null;
+        DateTime t1,t2;
+        t1=new DateTime(visitDate);
         for (model.datapump.Obs ele : obsList) {
-            if (ele.getConceptID() == conceptID && ele.getVisitDate().equals(visitDate) && ele.getObsGroupID() == obsID) {
+            t2=new DateTime(ele.getVisitDate());
+            if (ele.getConceptID() == conceptID && DateUtils.isSameDay(visitDate, ele.getVisitDate()) && ele.getObsGroupID() == obsID) {
                 obs = ele;
                 //System.out.println("obs group id: "+ele.getObsGroupID());
             }
