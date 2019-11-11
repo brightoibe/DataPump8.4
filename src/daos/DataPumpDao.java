@@ -1933,7 +1933,7 @@ public class DataPumpDao implements model.datapump.DataAccess {
                 obs = constructObs2(rs);
                 
                 obsList.add(obs);
-                System.out.println("");
+                System.out.println("obs group id "+obs.getObsGroupID());
                 /*order = new model.datapump.PatientRegimen();
                 order.setPatientID(rs.getInt("patient_id"));
                 order.setPepfarID(rs.getString("pepfar_id"));
@@ -2564,7 +2564,7 @@ public class DataPumpDao implements model.datapump.DataAccess {
         int obsGroupID = getObsIDOfConceptInList(162240, 27, obsList, visitDate);
         System.out.println("Obs ID of ARV Medication: "+obsGroupID);
         obsPin = getConceptForFormInGroup(159368, 27, obsList, visitDate, obsGroupID);
-        System.out.println("Prescribed regimen duration: "+obsPin.getValueNumeric());
+        //System.out.println("Prescribed regimen duration: "+obsPin.getValueNumeric());
         if (obsPin != null) {
             duration = (int) obsPin.getValueNumeric();
             durationUnit = "DAY(S)";
