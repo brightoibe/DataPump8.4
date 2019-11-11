@@ -2037,13 +2037,13 @@ public class DataPumpDao implements model.datapump.DataAccess {
         return obs;
     }
 
-    public int getObsGroupIDOfConceptInList(int conceptID, int formID, List<model.datapump.Obs> obsList, Date visitDate) {
+    public int getObsIDOfConceptInList(int conceptID, int formID, List<model.datapump.Obs> obsList, Date visitDate) {
         Obs obs = getConceptForForm(conceptID, formID, obsList);
-        int obsGroupID = 0;
+        int obsID = 0;
         if (obs != null) {
-            obsGroupID = obs.getObsGroupID();
+            obsID = obs.getObsID();
         }
-        return obsGroupID;
+        return obsID;
 
     }
 
@@ -2558,7 +2558,7 @@ public class DataPumpDao implements model.datapump.DataAccess {
                      This block of code extracts duration; durationUnit;
                      from the Obs List.
          */
-        int obsGroupID = getObsGroupIDOfConceptInList(165724, 27, obsList, visitDate);
+        int obsGroupID = getObsIDOfConceptInList(162240, 27, obsList, visitDate);
         System.out.println("Obs ID of ARV Medication: "+obsGroupID);
         obsPin = getConceptForFormInGroup(159368, 27, obsList, visitDate, obsGroupID);
         System.out.println("Prescribed regimen duration: "+obsPin.getValueNumeric());
