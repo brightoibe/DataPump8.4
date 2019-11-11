@@ -2039,7 +2039,7 @@ public class DataPumpDao implements model.datapump.DataAccess {
             //if (ele.getConceptID() == conceptID && DateUtils.isSameDay(visitDate, ele.getVisitDate()) && ele.getObsGroupID() == obsID) {
               if (ele.getConceptID() == conceptID && ele.getObsGroupID() == obsID) {  
                  obs = ele;
-                //System.out.println("obs group id: "+ele.getObsGroupID());
+                 System.out.println("obs group id of ele: "+ele.getObsGroupID());
               }
         }
         return obs;
