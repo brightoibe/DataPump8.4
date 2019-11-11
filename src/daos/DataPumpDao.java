@@ -2032,10 +2032,10 @@ public class DataPumpDao implements model.datapump.DataAccess {
 
     public model.datapump.Obs getConceptForFormInGroup(int conceptID, int formID, List<model.datapump.Obs> obsList, Date visitDate, int obsID) {
         model.datapump.Obs obs = null;
-        DateTime t1,t2;
-        t1=new DateTime(visitDate);
+        //DateTime t1,t2;
+        //t1=new DateTime(visitDate);
         for (model.datapump.Obs ele : obsList) {
-            t2=new DateTime(ele.getVisitDate());
+            //t2=new DateTime(ele.getVisitDate());
             //if (ele.getConceptID() == conceptID && DateUtils.isSameDay(visitDate, ele.getVisitDate()) && ele.getObsGroupID() == obsID) {
               if (ele.getConceptID() == conceptID && ele.getObsGroupID() == obsID) {  
                  obs = ele;
