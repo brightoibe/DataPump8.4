@@ -2606,7 +2606,7 @@ public class DataPumpDao implements model.datapump.DataAccess {
                 pepfarID = obsPin.getPepfarID();
             }*/
         } else {
-            obsPin = getConceptForForm(5096, 27, obsList, visitDate);
+            /*obsPin = getConceptForForm(5096, 27, obsList, visitDate);
             Date nextAppointmentDate = null;
             if (obsPin != null) {
                 nextAppointmentDate = obsPin.getValueDate();
@@ -2615,7 +2615,7 @@ public class DataPumpDao implements model.datapump.DataAccess {
                 Weeks wks = Weeks.weeksBetween(visitDateTime, nextAppoinDateTime);
                 duration = wks.getWeeks();
                 durationUnit = "WEEK(S)";
-            }
+            }*/
 
         }
         /*if (StringUtils.isEmpty(durationUnit) || duration == 0 || calculateDayValue(duration, durationUnit) > 120) {
@@ -3207,6 +3207,7 @@ public class DataPumpDao implements model.datapump.DataAccess {
                 //dayVal = 30;
             //}
         }*/
+        System.out.println("Days val: "+ dayVal);
         DateTime startDateTime = new DateTime(startDate);
         DateTime stopDateTime = startDateTime.plusDays(dayVal);
         stopDate = stopDateTime.toDate();
