@@ -2039,7 +2039,7 @@ public class DataPumpDao implements model.datapump.DataAccess {
             //if (ele.getConceptID() == conceptID && DateUtils.isSameDay(visitDate, ele.getVisitDate()) && ele.getObsGroupID() == obsID) {
               if (ele.getConceptID() == conceptID && ele.getObsGroupID() == obsID) {  
                  obs = ele;
-                 System.out.println("Test Concept ID "+conceptID+" obs group id of ele: "+ele.getObsGroupID()+ " Concept ID: "+ele.getConceptID());
+                 //System.out.println("Test Concept ID "+conceptID+" obs group id of ele: "+ele.getObsGroupID()+ " Concept ID: "+ele.getConceptID());
               }
         }
         return obs;
@@ -3192,7 +3192,8 @@ public class DataPumpDao implements model.datapump.DataAccess {
 
     public Date calculateStopDate(Date startDate, int duration, String unit) {
         Date stopDate = null;
-        int dayVal = 30;
+        int dayVal=calculateDayValue(duration, unit);
+        /*int dayVal = 30;
         if (StringUtils.isNotBlank(unit)) {
             if (StringUtils.equalsIgnoreCase(unit, "MONTH(S)")) {
                 dayVal = duration * 30;
@@ -3205,7 +3206,7 @@ public class DataPumpDao implements model.datapump.DataAccess {
             //if (dayVal > 120) {
                 //dayVal = 30;
             //}
-        }
+        }*/
         DateTime startDateTime = new DateTime(startDate);
         DateTime stopDateTime = startDateTime.plusDays(dayVal);
         stopDate = stopDateTime.toDate();
