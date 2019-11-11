@@ -1934,7 +1934,7 @@ public class DataPumpDao implements model.datapump.DataAccess {
                 obs = constructObs2(rs);
                 
                 obsList.add(obs);
-                System.out.println("obs group id "+obs.getObsGroupID());
+                //System.out.println("obs group id "+obs.getObsGroupID());
                 /*order = new model.datapump.PatientRegimen();
                 order.setPatientID(rs.getInt("patient_id"));
                 order.setPepfarID(rs.getString("pepfar_id"));
