@@ -1931,7 +1931,9 @@ public class DataPumpDao implements model.datapump.DataAccess {
             //Date stopDate = null;
             while (rs.next()) {
                 obs = constructObs2(rs);
+                
                 obsList.add(obs);
+                System.out.println("");
                 /*order = new model.datapump.PatientRegimen();
                 order.setPatientID(rs.getInt("patient_id"));
                 order.setPepfarID(rs.getString("pepfar_id"));
@@ -2032,6 +2034,7 @@ public class DataPumpDao implements model.datapump.DataAccess {
         for (model.datapump.Obs ele : obsList) {
             if (ele.getConceptID() == conceptID && ele.getVisitDate().equals(visitDate) && ele.getObsGroupID() == obsID) {
                 obs = ele;
+                //System.out.println("obs group id: "+ele.getObsGroupID());
             }
         }
         return obs;
