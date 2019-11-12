@@ -2487,6 +2487,7 @@ public class NDRWriter {
                 Days days = Days.daysBetween(startDateTime, endDateTime);
                 int daysVal = days.getDays();
                 String regimenDuration = String.valueOf(daysVal);
+                System.out.println("dayVal from here: "+daysVal);
                 regimenType.setPrescribedRegimenDuration(regimenDuration);
 
             }
