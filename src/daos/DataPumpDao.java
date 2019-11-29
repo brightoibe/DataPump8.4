@@ -7157,7 +7157,7 @@ public class DataPumpDao implements model.datapump.DataAccess {
         screen.updateStatus("Loading ART Date Dictionary...Please wait");
         /*String sql_text = "select  obs.person_id, obs.value_datetime from obs left join encounter on(obs.encounter_id=encounter.encounter_id) where concept_id=863 and obs.voided=0 and encounter.voided=0 and encounter.form_id=1 \n"
                 + "order by person_id ASC, obs.obs_datetime DESC ;";*/
-        String sql_text = "select encounter.patient_id,obs.value_datetime from encounter inner join obs on(obs.encounter_id=encounter.encounter_id and encounter.voided=0 and obs.concept_id=159599 and encounter.form_id=23)";
+        String sql_text = "select encounter.patient_id,obs.value_datetime from encounter inner join obs on(obs.encounter_id=encounter.encounter_id and encounter.voided=0 and obs.concept_id=159599 and encounter.form_id IN (23,56))";
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
