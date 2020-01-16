@@ -1022,7 +1022,8 @@ public class NDRDemographicsDictionary {
 
     public FingerPrintType createFingerPrintTypeFromBiometricInfoList(List<BiometricInfo> biometricInfoList) throws DatatypeConfigurationException {
         Date date_created = null;
-
+        int creator = 0;
+        String source = "UNK";
         FingerPrintType fingerPrintType = new FingerPrintType();
         date_created = biometricInfoList.get(0).getDateCreated();
         RightHandType rightHandType = createRightHandTypeFromBiometricInfoList(biometricInfoList);
@@ -1030,9 +1031,20 @@ public class NDRDemographicsDictionary {
         fingerPrintType.setDateCaptured(getXmlDate(date_created));
         fingerPrintType.setLeftHand(leftHandType);
         fingerPrintType.setRightHand(rightHandType);
-        date_created = biometricInfoList.get(0).getSoDateCreated();
-        fingerPrintType.setSource("N");
-                
+        //fingerPrintType.se
+        creator = biometricInfoList.get(0).getCreator();
+        switch (creator) {
+            case 0:
+                source = "N";
+                break;
+            case 1:
+                source = "M";
+                break;
+            default:
+                break;
+        }
+        fingerPrintType.setSource(source);
+
         return fingerPrintType;
     }
 

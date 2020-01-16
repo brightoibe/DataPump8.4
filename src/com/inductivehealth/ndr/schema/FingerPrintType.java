@@ -10,6 +10,7 @@ package com.inductivehealth.ndr.schema;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
@@ -62,6 +63,10 @@ public class FingerPrintType {
     @XmlElement(required = true)
     protected LeftHandType leftHand;
     protected String source;
+    
+    @XmlAttribute
+	//@XmlElement(name = "present", required = true)
+	private boolean present;
 
     /**
      * Gets the value of the dateCaptured property.
@@ -157,6 +162,20 @@ public class FingerPrintType {
      */
     public void setSource(String value) {
         this.source = value;
+    }
+
+    /**
+     * @return the present
+     */
+    public boolean isPresent() {
+        return present;
+    }
+
+    /**
+     * @param present the present to set
+     */
+    public void setPresent(boolean present) {
+        this.present = present;
     }
 
 }
