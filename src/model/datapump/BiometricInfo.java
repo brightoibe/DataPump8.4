@@ -14,6 +14,20 @@ import java.util.Date;
 public class BiometricInfo {
 
     /**
+     * @return the source
+     */
+    public String getSource() {
+        return source;
+    }
+
+    /**
+     * @param source the source to set
+     */
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    /**
      * @return the biometricInfoID
      */
     public int getBiometricInfoID() {
@@ -102,4 +116,5 @@ public class BiometricInfo {
     private String fingerPosition;
     private Date dateCreated;
     private int creator;
+    private String source;
 }
