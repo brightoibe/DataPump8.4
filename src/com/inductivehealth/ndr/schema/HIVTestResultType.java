@@ -15,17 +15,17 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for CodedSimpleType complex type.
+ * <p>Java class for HIVTestResultType complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="CodedSimpleType">
+ * &lt;complexType name="HIVTestResultType">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="Code" type="{}CodeType"/>
- *         &lt;element name="CodeDescTxt" type="{}CodeDescTxtType" minOccurs="0"/>
+ *         &lt;element name="TestResult" type="{}TestResultType" minOccurs="0"/>
+ *         &lt;element name="RecencyTesting" type="{}RecencyTestingType" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -35,63 +35,63 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "CodedSimpleType", propOrder = {
-    "code",
-    "codeDescTxt"
+@XmlType(name = "HIVTestResultType", propOrder = {
+    "testResult",
+    "recencyTesting"
 })
-public class CodedSimpleType {
+public class HIVTestResultType {
 
-    @XmlElement(name = "Code", required = true)
-    protected String code;
-    @XmlElement(name = "CodeDescTxt")
-    protected String codeDescTxt;
+    @XmlElement(name = "TestResult")
+    protected TestResultType testResult;
+    @XmlElement(name = "RecencyTesting")
+    protected RecencyTestingType recencyTesting;
 
     /**
-     * Gets the value of the code property.
+     * Gets the value of the testResult property.
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link TestResultType }
      *     
      */
-    public String getCode() {
-        return code;
+    public TestResultType getTestResult() {
+        return testResult;
     }
 
     /**
-     * Sets the value of the code property.
+     * Sets the value of the testResult property.
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link TestResultType }
      *     
      */
-    public void setCode(String value) {
-        this.code = value;
+    public void setTestResult(TestResultType value) {
+        this.testResult = value;
     }
 
     /**
-     * Gets the value of the codeDescTxt property.
+     * Gets the value of the recencyTesting property.
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link RecencyTestingType }
      *     
      */
-    public String getCodeDescTxt() {
-        return codeDescTxt;
+    public RecencyTestingType getRecencyTesting() {
+        return recencyTesting;
     }
 
     /**
-     * Sets the value of the codeDescTxt property.
+     * Sets the value of the recencyTesting property.
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link RecencyTestingType }
      *     
      */
-    public void setCodeDescTxt(String value) {
-        this.codeDescTxt = value;
+    public void setRecencyTesting(RecencyTestingType value) {
+        this.recencyTesting = value;
     }
 
 }

@@ -1030,6 +1030,8 @@ public class NDRDemographicsDictionary {
         fingerPrintType.setDateCaptured(getXmlDate(date_created));
         fingerPrintType.setLeftHand(leftHandType);
         fingerPrintType.setRightHand(rightHandType);
+        //fingerPrintType.setSource("N");
+                
         return fingerPrintType;
     }
 
@@ -1060,13 +1062,14 @@ public class NDRDemographicsDictionary {
         leftMiddle = getTemplateFor("LeftMiddle", biometricInfoList);
         leftWedding = getTemplateFor("LeftWedding", biometricInfoList);
         leftSmall = getTemplateFor("LeftSmall", biometricInfoList);
-        
-        leftHandType = new LeftHandType();
-        leftHandType.setLeftThumb(leftThumb);
-        leftHandType.setLeftIndex(leftIndex);
-        leftHandType.setLeftMiddle(leftMiddle);
-        leftHandType.setLeftWedding(leftWedding);
-        leftHandType.setLeftSmall(leftSmall);
+        if (util.NDRCommonUtills.isAnyNotEmpty(leftThumb, leftIndex, leftMiddle, leftWedding, leftSmall)) {
+            leftHandType = new LeftHandType();
+            leftHandType.setLeftThumb(leftThumb);
+            leftHandType.setLeftIndex(leftIndex);
+            leftHandType.setLeftMiddle(leftMiddle);
+            leftHandType.setLeftWedding(leftWedding);
+            leftHandType.setLeftSmall(leftSmall);
+        }
         return leftHandType;
     }
 

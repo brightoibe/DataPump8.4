@@ -17,16 +17,16 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for IdentifiersType complex type.
+ * <p>Java class for IndexNotificationServicesType complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="IdentifiersType">
+ * &lt;complexType name="IndexNotificationServicesType">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="Identifier" type="{}IdentifierType" maxOccurs="unbounded"/>
+ *         &lt;element name="Partner" type="{}PartnerNotificationType" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -36,41 +36,41 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "IdentifiersType", propOrder = {
-    "identifier"
+@XmlType(name = "IndexNotificationServicesType", propOrder = {
+    "partner"
 })
-public class IdentifiersType {
+public class IndexNotificationServicesType {
 
-    @XmlElement(name = "Identifier", required = true)
-    protected List<IdentifierType> identifier;
+    @XmlElement(name = "Partner")
+    protected List<PartnerNotificationType> partner;
 
     /**
-     * Gets the value of the identifier property.
+     * Gets the value of the partner property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the identifier property.
+     * This is why there is not a <CODE>set</CODE> method for the partner property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getIdentifier().add(newItem);
+     *    getPartner().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link IdentifierType }
+     * {@link PartnerNotificationType }
      * 
      * 
      */
-    public List<IdentifierType> getIdentifier() {
-        if (identifier == null) {
-            identifier = new ArrayList<IdentifierType>();
+    public List<PartnerNotificationType> getPartner() {
+        if (partner == null) {
+            partner = new ArrayList<PartnerNotificationType>();
         }
-        return this.identifier;
+        return this.partner;
     }
 
 }
