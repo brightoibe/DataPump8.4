@@ -1031,7 +1031,6 @@ public class NDRDemographicsDictionary {
         fingerPrintType.setDateCaptured(getXmlDate(date_created));
         fingerPrintType.setLeftHand(leftHandType);
         fingerPrintType.setRightHand(rightHandType);
-        //fingerPrintType.se
         creator = biometricInfoList.get(0).getCreator();
         switch (creator) {
             case 0:
