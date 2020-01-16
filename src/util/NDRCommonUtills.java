@@ -156,6 +156,15 @@ public class NDRCommonUtills {
         return dateString;
 
     }
+      public static boolean isAnyNotEmpty(String... testString){
+          boolean ans=false;
+          for(String ele: testString){
+              if(StringUtils.isNotEmpty(ele)){
+                  ans=true;
+              }
+          }
+          return ans;
+      }
     
      
     

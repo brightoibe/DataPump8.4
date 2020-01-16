@@ -867,9 +867,11 @@ public class NDRDemographicsDictionary {
         demo.setPatientIdentifier(patient.getPepfarID());
         IdentifierType idt = null;
         IdentifiersType idtss = new IdentifiersType();
-        String hospID = loc.getDatimID() + "-" + patient.getHospID();
+        // String hospID = loc.getDatimID() + "-" + patient.getHospID();
+        String hospID = patient.getHospID();
         String otherID = patient.getOtherID();
-        String pepfarID = loc.getDatimID() + "-" + patient.getPepfarID();
+        String pepfarID = patient.getPepfarID();
+        //String pepfarID = loc.getDatimID() + "-" + patient.getPepfarID();
         if (StringUtils.isNotEmpty(hospID)) {
             idt = new IdentifierType();
             idt.setIDNumber(hospID);
@@ -999,64 +1001,73 @@ public class NDRDemographicsDictionary {
 
         return ans;
     }
-     public static FacilityType createFacilityType(String name,String code) {
+
+    public static FacilityType createFacilityType(String name, String code) {
         FacilityType ft = new FacilityType();
         ft.setFacilityName(name);
         ft.setFacilityID(name.toUpperCase());
         ft.setFacilityTypeCode(code);
         return ft;
     }
-     public String getTemplateFor(String fingerPosition,List<BiometricInfo> bioInfoList){
-         String template=null;
-         for(BiometricInfo ele: bioInfoList){
-             if(StringUtils.equalsIgnoreCase(fingerPosition,ele.getFingerPosition())){
-                 template=ele.getTemplate();
-             }
-         }
-         return template;
-     }
-     public FingerPrintType createFingerPrintTypeFromBiometricInfoList(List<BiometricInfo> biometricInfoList) throws DatatypeConfigurationException{
-         Date date_created=null;
-         FingerPrintType fingerPrintType=new FingerPrintType();
-         date_created=biometricInfoList.get(0).getDateCreated();
-         RightHandType rightHandType=createRightHandTypeFromBiometricInfoList(biometricInfoList);
-         LeftHandType leftHandType=createLeftHandTypeFromBiometricInfoList(biometricInfoList);
-         fingerPrintType.setDateCaptured(getXmlDate(date_created));
-         fingerPrintType.setLeftHand(leftHandType);
-         fingerPrintType.setRightHand(rightHandType);
-         return fingerPrintType;
-     }
-     public RightHandType createRightHandTypeFromBiometricInfoList(List<BiometricInfo> biometricInfoList){
-         RightHandType rightHandType=null;
-         String rightThumb="",rightIndex="",rightMiddle="",rightWedding="",rightSmall="";
-         rightThumb=getTemplateFor("RightThumb", biometricInfoList);
-         rightIndex=getTemplateFor("RightIndex", biometricInfoList);
-         rightMiddle=getTemplateFor("RightMiddle", biometricInfoList);
-         rightWedding=getTemplateFor("RightWedding", biometricInfoList);
-         rightSmall=getTemplateFor("RightSmall", biometricInfoList);
-         rightHandType=new RightHandType();
-         rightHandType.setRightThumb(rightThumb);
-         rightHandType.setRightIndex(rightIndex);
-         rightHandType.setRightMiddle(rightMiddle);
-         rightHandType.setRightWedding(rightWedding);
-         rightHandType.setRightSmall(rightSmall);
-         return rightHandType;
-     }
-     public LeftHandType createLeftHandTypeFromBiometricInfoList(List<BiometricInfo> biometricInfoList){
-         LeftHandType leftHandType=new LeftHandType();
-         String leftThumb="",leftIndex="",leftMiddle="",leftWedding="",leftSmall="";
-         leftThumb=getTemplateFor("LeftThumb", biometricInfoList);
-         leftIndex=getTemplateFor("LeftIndex", biometricInfoList);
-         leftMiddle=getTemplateFor("LeftMiddle", biometricInfoList);
-         leftWedding=getTemplateFor("LeftWedding", biometricInfoList);
-         leftSmall=getTemplateFor("LeftSmall", biometricInfoList);
-         leftHandType=new LeftHandType();
-         leftHandType.setLeftThumb(leftThumb);
-         leftHandType.setLeftIndex(leftIndex);
-         leftHandType.setLeftMiddle(leftMiddle);
-         leftHandType.setLeftWedding(leftWedding);
-         leftHandType.setLeftSmall(leftSmall);
-         return leftHandType;
-     }
-     
+
+    public String getTemplateFor(String fingerPosition, List<BiometricInfo> bioInfoList) {
+        String template = null;
+        for (BiometricInfo ele : bioInfoList) {
+            if (StringUtils.equalsIgnoreCase(fingerPosition, ele.getFingerPosition())) {
+                template = ele.getTemplate();
+            }
+        }
+        return template;
+    }
+
+    public FingerPrintType createFingerPrintTypeFromBiometricInfoList(List<BiometricInfo> biometricInfoList) throws DatatypeConfigurationException {
+        Date date_created = null;
+
+        FingerPrintType fingerPrintType = new FingerPrintType();
+        date_created = biometricInfoList.get(0).getDateCreated();
+        RightHandType rightHandType = createRightHandTypeFromBiometricInfoList(biometricInfoList);
+        LeftHandType leftHandType = createLeftHandTypeFromBiometricInfoList(biometricInfoList);
+        fingerPrintType.setDateCaptured(getXmlDate(date_created));
+        fingerPrintType.setLeftHand(leftHandType);
+        fingerPrintType.setRightHand(rightHandType);
+        return fingerPrintType;
+    }
+
+    public RightHandType createRightHandTypeFromBiometricInfoList(List<BiometricInfo> biometricInfoList) {
+        RightHandType rightHandType = null;
+        String rightThumb = "", rightIndex = "", rightMiddle = "", rightWedding = "", rightSmall = "";
+        rightThumb = getTemplateFor("RightThumb", biometricInfoList);
+        rightIndex = getTemplateFor("RightIndex", biometricInfoList);
+        rightMiddle = getTemplateFor("RightMiddle", biometricInfoList);
+        rightWedding = getTemplateFor("RightWedding", biometricInfoList);
+        rightSmall = getTemplateFor("RightSmall", biometricInfoList);
+        if (util.NDRCommonUtills.isAnyNotEmpty(rightThumb, rightIndex, rightMiddle, rightWedding, rightSmall)) {
+            rightHandType = new RightHandType();
+            rightHandType.setRightThumb(rightThumb);
+            rightHandType.setRightIndex(rightIndex);
+            rightHandType.setRightMiddle(rightMiddle);
+            rightHandType.setRightWedding(rightWedding);
+            rightHandType.setRightSmall(rightSmall);
+        }
+        return rightHandType;
+    }
+
+    public LeftHandType createLeftHandTypeFromBiometricInfoList(List<BiometricInfo> biometricInfoList) {
+        LeftHandType leftHandType = new LeftHandType();
+        String leftThumb = "", leftIndex = "", leftMiddle = "", leftWedding = "", leftSmall = "";
+        leftThumb = getTemplateFor("LeftThumb", biometricInfoList);
+        leftIndex = getTemplateFor("LeftIndex", biometricInfoList);
+        leftMiddle = getTemplateFor("LeftMiddle", biometricInfoList);
+        leftWedding = getTemplateFor("LeftWedding", biometricInfoList);
+        leftSmall = getTemplateFor("LeftSmall", biometricInfoList);
+        
+        leftHandType = new LeftHandType();
+        leftHandType.setLeftThumb(leftThumb);
+        leftHandType.setLeftIndex(leftIndex);
+        leftHandType.setLeftMiddle(leftMiddle);
+        leftHandType.setLeftWedding(leftWedding);
+        leftHandType.setLeftSmall(leftSmall);
+        return leftHandType;
+    }
+
 }

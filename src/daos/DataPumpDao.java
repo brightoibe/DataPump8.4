@@ -9276,7 +9276,8 @@ public class DataPumpDao implements model.datapump.DataAccess {
                     pts.setPepfarID(pepfarDictionary.get(person_id));
                 } */
                
-                pts.setPepfarID(hospIDDictionary.get(person_id));
+                //pts.setPepfarID(hospIDDictionary.get(person_id));
+                pts.setPepfarID(pepfarDictionary.get(person_id));
                 pts.setHospID(hospIDDictionary.get(person_id));
                 pts.seteHNID(ehnidDictionary.get(person_id));
                 pts.setOtherID(otherIDDictionary.get(person_id));

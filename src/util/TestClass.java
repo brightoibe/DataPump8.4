@@ -5,24 +5,22 @@
  */
 package util;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import model.Key;
+import org.apache.commons.lang3.time.DateUtils;
 
 /**
  *
  * @author The Bright
  */
 public class TestClass {
-    public static void main(String[] arg){
-        Key k1,k2;
-        k1=new Key(1,2);
-        k2=new Key(1,4);
-        System.out.println(k1.equals(k2));
+    public static void main(String[] arg) throws ParseException{
        
     }
-    public static int[] toArray(int... i){
-        int[] ans=i;
-        return ans;
-    }
+   
     
 }

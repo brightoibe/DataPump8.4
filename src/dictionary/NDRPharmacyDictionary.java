@@ -410,6 +410,7 @@ public class NDRPharmacyDictionary {
             regimenType.setDateRegimenEndedYYYY(year);
             DateTime startDateTime = new DateTime(visitDate);
             DateTime endDateTime = new DateTime(stopDate);
+            
             Days days = Days.daysBetween(startDateTime, endDateTime);
             int daysVal = days.getDays();
             String regimenDuration = String.valueOf(daysVal);
