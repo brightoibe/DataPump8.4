@@ -1044,6 +1044,7 @@ public class NDRDemographicsDictionary {
                 break;
         }
         fingerPrintType.setSource(source);
+        fingerPrintType.setPresent(true);
 
         return fingerPrintType;
     }
