@@ -62,7 +62,7 @@ public class FingerPrintType {
     protected RightHandType rightHand;
     @XmlElement(required = true)
     protected LeftHandType leftHand;
-    protected String source;
+    //protected String source;
     
     //@XmlAttribute
 	//@XmlElement(name = "present", required = true)
@@ -148,9 +148,9 @@ public class FingerPrintType {
      *     {@link String }
      *     
      */
-    public String getSource() {
+   /* public String getSource() {
         return source;
-    }
+    }*/
 
     /**
      * Sets the value of the source property.
@@ -160,9 +160,9 @@ public class FingerPrintType {
      *     {@link String }
      *     
      */
-    public void setSource(String value) {
+   /* public void setSource(String value) {
         this.source = value;
-    }
+    }*/
 
     /**
      * @return the present

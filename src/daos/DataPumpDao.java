@@ -128,7 +128,7 @@ public class DataPumpDao implements model.datapump.DataAccess {
     private FileManager mgr;
     private Map<Integer, String> pepfarDictionary, hospIDDictionary,
             locationDictionary, otherIDDictionary, ehnidDictionary,
-            drugDictionary,htsClientCodeDictionary, idLocationDictionary, valueCodedDictionary,
+            drugDictionary, htsClientCodeDictionary, idLocationDictionary, valueCodedDictionary,
             formNamesDictionary;
     private HashMap<Integer, PatientRegimen> firstRegimenDictionary;
     private ArrayList<model.datapump.Demographics> patientDemoList2;
@@ -1150,13 +1150,14 @@ public class DataPumpDao implements model.datapump.DataAccess {
             allVisitList = loadAllVisit(idSet);
             for (model.datapump.Demographics pts : patients) {
                 int patientID = pts.getPatientID();
-                if (StringUtils.isNotBlank(pts.getPepfarID()) && !pts.getGender().isEmpty() && pts.getDateOfBirth() != null ) {
+                if (StringUtils.isNotBlank(pts.getPepfarID()) && !pts.getGender().isEmpty() && pts.getDateOfBirth() != null ){//&& pts.getPatientID() == 19636) {
                     //Get IP Name and IP Code from global properties
                     ipName = propertyMap.get("partner_full_name");
                     ipCode = propertyMap.get("partner_short_name");
                     container = NDRDictionary.createContainer(ipName, ipCode, "UPDATED");
                     ptsBiometricInfo = getBiometricInfoForPatient(patientID);
                     if (!ptsBiometricInfo.isEmpty()) {
+                        System.out.println("I contain something");
                         fingerPrintType = NDRDictionary.createFingerPrintType(ptsBiometricInfo);
                     }
                     individual = NDRDictionary.createIndividualReport();
@@ -1934,7 +1935,7 @@ public class DataPumpDao implements model.datapump.DataAccess {
             //Date stopDate = null;
             while (rs.next()) {
                 obs = constructObs2(rs);
-                
+
                 obsList.add(obs);
                 //System.out.println("obs group id "+obs.getObsGroupID());
                 /*order = new model.datapump.PatientRegimen();
@@ -2025,7 +2026,7 @@ public class DataPumpDao implements model.datapump.DataAccess {
     public model.datapump.Obs getConceptForForm(int conceptID, int formID, List<model.datapump.Obs> obsList, Date visitDate) {
         model.datapump.Obs obs = null;
         for (model.datapump.Obs ele : obsList) {
-            if (ele.getConceptID() == conceptID && DateUtils.isSameDay(ele.getVisitDate(),visitDate) && ele.getFormID()==formID) {
+            if (ele.getConceptID() == conceptID && DateUtils.isSameDay(ele.getVisitDate(), visitDate) && ele.getFormID() == formID) {
                 obs = ele;
             }
         }
@@ -2039,10 +2040,10 @@ public class DataPumpDao implements model.datapump.DataAccess {
         for (model.datapump.Obs ele : obsList) {
             //t2=new DateTime(ele.getVisitDate());
             //if (ele.getConceptID() == conceptID && DateUtils.isSameDay(visitDate, ele.getVisitDate()) && ele.getObsGroupID() == obsID) {
-              if (ele.getConceptID() == conceptID && ele.getObsGroupID() == obsID) {  
-                 obs = ele;
-                 //System.out.println("Test Concept ID "+conceptID+" obs group id of ele: "+ele.getObsGroupID()+ " Concept ID: "+ele.getConceptID());
-              }
+            if (ele.getConceptID() == conceptID && ele.getObsGroupID() == obsID) {
+                obs = ele;
+                //System.out.println("Test Concept ID "+conceptID+" obs group id of ele: "+ele.getObsGroupID()+ " Concept ID: "+ele.getConceptID());
+            }
         }
         return obs;
     }
@@ -2570,7 +2571,7 @@ public class DataPumpDao implements model.datapump.DataAccess {
                      from the Obs List.
          */
         int obsGroupID = getObsIDOfConceptInList(165724, 27, obsList, visitDate);
-        System.out.println("Obs ID of ARV Medication: "+obsGroupID);
+        System.out.println("Obs ID of ARV Medication: " + obsGroupID);
         obsPin = getConceptForFormInGroup(159368, 27, obsList, visitDate, obsGroupID);
         //System.out.println("Prescribed regimen duration: "+obsPin.getValueNumeric());
         if (obsPin != null) {
@@ -3194,7 +3195,7 @@ public class DataPumpDao implements model.datapump.DataAccess {
 
     public Date calculateStopDate(Date startDate, int duration, String unit) {
         Date stopDate = null;
-        int dayVal=calculateDayValue(duration, unit);
+        int dayVal = calculateDayValue(duration, unit);
         /*int dayVal = 30;
         if (StringUtils.isNotBlank(unit)) {
             if (StringUtils.equalsIgnoreCase(unit, "MONTH(S)")) {
@@ -3209,7 +3210,7 @@ public class DataPumpDao implements model.datapump.DataAccess {
                 //dayVal = 30;
             //}
         }*/
-        System.out.println("Days val: "+ dayVal);
+        System.out.println("Days val: " + dayVal);
         DateTime startDateTime = new DateTime(startDate);
         DateTime stopDateTime = startDateTime.plusDays(dayVal);
         stopDate = stopDateTime.toDate();
@@ -7388,30 +7389,35 @@ public class DataPumpDao implements model.datapump.DataAccess {
             ps.setInt(1, patientID);
             rs = ps.executeQuery();
             while (rs.next()) {
+                System.out.println("I have gone crazy "+ rs.getInt("patient_Id"));
                 biometricInfoList.add(createBiometricInfo(rs));
             }
             cleanUp(rs, ps);
         } catch (SQLException ex) {
             handleException(ex);
-        } catch (IOException ex){
+        } catch (IOException ex) {
             handleException(ex);
-        }finally {
+        } finally {
             cleanUp(rs, ps);
         }
         return biometricInfoList;
     }
 
     public BiometricInfo createBiometricInfo(ResultSet rs) throws SQLException, IOException {
-        BiometricInfo biometricInfo = new BiometricInfo();
-        biometricInfo.setBiometricInfoID(rs.getInt("biometricInfo_Id"));
-        biometricInfo.setPatientID(rs.getInt("patient_Id"));
-        Clob clob=rs.getClob("template");
-        if(clob!=null){
-            biometricInfo.setTemplate(NDRCommonUtills.convertToString(clob));
+        BiometricInfo biometricInfo = null;
+        if (rs.getString("fingerPosition") != null) {
+            biometricInfo = new BiometricInfo();
+            biometricInfo.setBiometricInfoID(rs.getInt("biometricInfo_Id"));
+            biometricInfo.setPatientID(rs.getInt("patient_Id"));
+            Clob clob = rs.getClob("template");
+            if (clob != null) {
+                biometricInfo.setTemplate(NDRCommonUtills.convertToString(clob));
+            }
+            biometricInfo.setFingerPosition(rs.getString("fingerPosition"));
+            biometricInfo.setCreator(rs.getInt("creator"));
+            biometricInfo.setDateCreated(rs.getDate("date_created"));
         }
-        biometricInfo.setFingerPosition(rs.getString("fingerPosition"));
-        biometricInfo.setCreator(rs.getInt("creator"));
-        biometricInfo.setDateCreated(rs.getDate("date_created"));
+
         return biometricInfo;
     }
 
@@ -8644,6 +8650,7 @@ public class DataPumpDao implements model.datapump.DataAccess {
             screen.showError(ex.getMessage());
         }
     }
+
     public HashMap<Integer, String> getAllPatientPepfarIDs() {
         ResultSet rs = null;
         HashMap<Integer, String> map = new HashMap<Integer, String>();
@@ -9300,7 +9307,7 @@ public class DataPumpDao implements model.datapump.DataAccess {
                 /*if (!StringUtils.isEmpty(pepfarID)) {
                     pts.setPepfarID(pepfarDictionary.get(person_id));
                 } */
-               
+
                 //pts.setPepfarID(hospIDDictionary.get(person_id));
                 pts.setPepfarID(pepfarDictionary.get(person_id));
                 pts.setHospID(hospIDDictionary.get(person_id));
@@ -9683,6 +9690,7 @@ public class DataPumpDao implements model.datapump.DataAccess {
         screen.updateStatus("PEPFAR_ID dictionary loaded in " + duration + " secs");
 
     }
+
     private void loadHTSIDDictionary() {
         long startTime = System.currentTimeMillis();
         long duration = 0L;
