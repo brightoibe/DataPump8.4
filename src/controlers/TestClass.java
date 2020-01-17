@@ -110,10 +110,11 @@ public class TestClass {
         return StringUtils.join(codeArr, "/");
     }
     public static void main(String[] arg) throws FileNotFoundException  {
-        String codedDrug="D4T-3TC-LPV/r";
-        loadMaps();
-        System.out.println(getCode(StringUtils.replace(codedDrug, "/","")));
-        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        //String codedDrug="D4T-3TC-LPV/r";
+        //loadMaps();
+        String test="Rk1SACAyMAAAAADAAAABBAEsAMUAxQEAARA3G4BeAC4NAECmAEeDAECVAEgGAEB2AFCKAEBVAGUQAIA6AJAVAICeAJv5AECFALP+AECdALV7AIBAAL8RAEDeAMPsAECbAMj1AEDHAMvqAEBtANcDAIBHAOQTAICGAOjvAEBgAOwAAEDLAPHgAECtAP1iAEDFAQbWAIBTAQgLAIBzAQ/aAIATAQ+xAECfARDUAIC2ARDRAIBbARbsAECIARfQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==";
+        System.out.println(test.length());
+        //ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         
         
         

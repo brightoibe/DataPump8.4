@@ -5,6 +5,10 @@
  */
 package util;
 
+import java.io.IOException;
+import java.io.Reader;
+import java.sql.Clob;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -106,6 +110,16 @@ public class NDRCommonUtills {
         stopDate = stopDateTime.toDate();
         return stopDate;
     }
+     public static String convertToString(Clob clob) throws SQLException, IOException{
+         String text=null;
+         Reader r = clob.getCharacterStream();
+         StringBuilder buffer = new StringBuilder();
+         int ch;
+         while ((ch = r.read())!=-1) {
+            buffer.append(""+(char)ch);
+         }
+         return buffer.toString();
+     }
      public static int calculateDayValue(int duration, String unit) {
         int dayVal = 0;
         if (StringUtils.isNotBlank(unit)) {

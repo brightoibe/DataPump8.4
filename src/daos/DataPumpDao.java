@@ -24,6 +24,7 @@ import dictionary.NDRMasterDictionary;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -111,6 +112,7 @@ import util.CompressUtil;
 import util.CustomErrorHandler;
 import util.FileManager;
 import util.LocationMap;
+import util.NDRCommonUtills;
 import util.NDRWriter;
 import util.NigeriaQualWriter;
 
@@ -1148,7 +1150,7 @@ public class DataPumpDao implements model.datapump.DataAccess {
             allVisitList = loadAllVisit(idSet);
             for (model.datapump.Demographics pts : patients) {
                 int patientID = pts.getPatientID();
-                if (!pts.getPepfarID().isEmpty() && !pts.getGender().isEmpty() && pts.getDateOfBirth() != null) {
+                if (StringUtils.isNotBlank(pts.getPepfarID()) && !pts.getGender().isEmpty() && pts.getDateOfBirth() != null && pts.getPatientID()==16041) {
                     //Get IP Name and IP Code from global properties
                     ipName = propertyMap.get("partner_full_name");
                     ipCode = propertyMap.get("partner_short_name");
@@ -7391,17 +7393,22 @@ public class DataPumpDao implements model.datapump.DataAccess {
             cleanUp(rs, ps);
         } catch (SQLException ex) {
             handleException(ex);
-        } finally {
+        } catch (IOException ex){
+            handleException(ex);
+        }finally {
             cleanUp(rs, ps);
         }
         return biometricInfoList;
     }
 
-    public BiometricInfo createBiometricInfo(ResultSet rs) throws SQLException {
+    public BiometricInfo createBiometricInfo(ResultSet rs) throws SQLException, IOException {
         BiometricInfo biometricInfo = new BiometricInfo();
         biometricInfo.setBiometricInfoID(rs.getInt("biometricInfo_Id"));
         biometricInfo.setPatientID(rs.getInt("patient_Id"));
-        biometricInfo.setTemplate(rs.getString("template"));
+        Clob clob=rs.getClob("template");
+        if(clob!=null){
+            biometricInfo.setTemplate(NDRCommonUtills.convertToString(clob));
+        }
         biometricInfo.setFingerPosition(rs.getString("fingerPosition"));
         biometricInfo.setCreator(rs.getInt("creator"));
         biometricInfo.setDateCreated(rs.getDate("date_created"));
