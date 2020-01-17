@@ -203,14 +203,36 @@ public class NDRHIVTestingReportTypeDictionary {
 
         return knowledgeAssessmentType;
     }
-    public HIVRiskAssessmentType createHIVRiskAssessmentType(List<Obs> obsList, Demographics pts){
-        HIVRiskAssessmentType hivRiskAssessmentType=null;
-        int conceptID=0,valueCoded=0;
-        boolean ans=false;
-        if(!obsList.isEmpty()){
-            hivRiskAssessmentType=new HIVRiskAssessmentType();
-            switch(conceptID){
-                 
+
+    public HIVRiskAssessmentType createHIVRiskAssessmentType(List<Obs> obsList, Demographics pts) {
+        /*
+        //HIV Risk Assesment
+ 	Ever had sexual intercourse 165800	
+ 	
+	Blood transfusion in last 3 months 1063	
+	
+	Unprotected sex with casual partner in last 3 months 159218	
+	
+	Unprotected sex with regular partner in the last 3 months 165803	
+ 	
+	STI in last 3 months 164809	
+ 	
+	More than 1 sex partner during last 3 months 165806	
+         */
+        HIVRiskAssessmentType hivRiskAssessmentType = null;
+        int conceptID = 0, valueCoded = 0;
+        boolean ans = false;
+        if (!obsList.isEmpty()) {
+            hivRiskAssessmentType = new HIVRiskAssessmentType();
+            for (Obs obs : obsList) {
+                conceptID=obs.getConceptID();
+                switch (conceptID) {
+                    case 165800://Ever had sexual intercourse
+                        valueCoded = obs.getValueCoded();
+                        ans = convertYesNoValueCodedToBoolean(valueCoded);
+                        hivRiskAssessmentType.setEverHadSexualIntercourse(ans);
+                        break;
+                }
             }
         }
         return hivRiskAssessmentType;
