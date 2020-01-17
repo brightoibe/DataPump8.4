@@ -169,9 +169,9 @@ public class NDRHIVTestingReportTypeDictionary {
             regimenTypeList.add(regimenType);
         }
          */
-         IndexNotificationServicesType indexNotofication = null;
+         IndexNotificationServicesType indexNotification = null;
         if (!obsList.isEmpty()) {
-            indexNotofication=new IndexNotificationServicesType();
+            indexNotification=new IndexNotificationServicesType();
             List<Obs> obsListForPartnerElicitation = NDRCommonUtills.getAllObsWithConceptForList(165858, visitDate, obsList);// Retrieve all Group concept obs (Partner Elicitation (165858))
             List<Obs> obsListForPartnerTesting = null;
             List<PartnerNotificationType> partnerNotificationTypeList = new ArrayList<>();
@@ -185,10 +185,10 @@ public class NDRHIVTestingReportTypeDictionary {
                 partnerNotification = createPartnerNotificationType(obsListForPartnerTesting, visitDate, pts);
                 partnerNotificationTypeList.add(partnerNotification);
             }
-            indexNotofication.getPartner().addAll(partnerNotificationTypeList);
+            indexNotification.getPartner().addAll(partnerNotificationTypeList);
         }
        
-        return indexNotofication;
+        return indexNotification;
     }
 
     public PartnerNotificationType createPartnerNotificationType(List<Obs> obsList, Date visitDate, Demographics pts) {
