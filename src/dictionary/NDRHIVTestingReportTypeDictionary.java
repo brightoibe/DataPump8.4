@@ -5,6 +5,7 @@
  */
 package dictionary;
 
+import com.inductivehealth.ndr.schema.ClinicalTBScreeningType;
 import com.inductivehealth.ndr.schema.HIVRiskAssessmentType;
 import com.inductivehealth.ndr.schema.HIVTestResultType;
 import com.inductivehealth.ndr.schema.IndexNotificationServicesType;
@@ -263,6 +264,10 @@ public class NDRHIVTestingReportTypeDictionary {
             }
         }
         return hivRiskAssessmentType;
+    }
+    public ClinicalTBScreeningType createClinicalTBScreeningType(List<Obs> obsList, Demographics demo){
+        ClinicalTBScreeningType clinicalTBScreeningType=null;
+        return clinicalTBScreeningType;
     }
 
 }
