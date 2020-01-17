@@ -177,6 +177,16 @@ public class NDRHIVTestingReportTypeDictionary {
                        knowledgeAssessmentType.setClientInformedOfHIVTransmissionRiskFactors(ans);
                        break;
                    case 165804://Client informed on preventing HIV transmission methods
+                       valueCoded=obs.getValueCoded();
+                       ans=convertYesNoValueCodedToBoolean(valueCoded);
+                       knowledgeAssessmentType.setClientInformedAboutPreventingHIV(ans);
+                       break;
+                   case 165884://Client informed about possible test results
+                       valueCoded=obs.getValueCoded();
+                       ans=convertYesNoValueCodedToBoolean(valueCoded);
+                       knowledgeAssessmentType.setClientInformedAboutPossibleTestResults(ans);
+                       break;
+                   case 1710:// Informed consent for HIV testing given
                        
                     
                        
