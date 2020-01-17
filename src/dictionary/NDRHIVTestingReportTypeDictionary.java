@@ -16,6 +16,7 @@ import com.inductivehealth.ndr.schema.PostTestCounsellingType;
 import com.inductivehealth.ndr.schema.PreTestInformationType;
 import com.inductivehealth.ndr.schema.RecencyTestingType;
 import com.inductivehealth.ndr.schema.SyndromicSTIScreeningType;
+import com.inductivehealth.ndr.schema.TestResultType;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -145,6 +146,10 @@ public class NDRHIVTestingReportTypeDictionary {
         HIVTestResultType hivTestResultType = new HIVTestResultType();
         return hivTestResultType;
     }
+    public TestResultType createTestResultType(List<Obs> obsList, Demographics pts){
+        TestResultType testResultType=null;
+        return testResultType;
+    }
     public RecencyTestingType createRecencyTestingType(List<Obs> obsList, Demographics pts) throws DatatypeConfigurationException{
         /*
             	HIV Recency Test Name (165849) 	
@@ -196,11 +201,6 @@ public class NDRHIVTestingReportTypeDictionary {
                         break;
                     default:
                         break;
-                        
-                        
-                        
-                        
-              
                 }
             }
         }
