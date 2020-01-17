@@ -252,7 +252,13 @@ public class NDRHIVTestingReportTypeDictionary {
                         ans = convertYesNoValueCodedToBoolean(valueCoded);
                         hivRiskAssessmentType.setSTIInLast3Months(ans);
                         break;
-
+                    case  165806://More than 1 sex partner during last 3 months
+                        valueCoded = obs.getValueCoded();
+                        ans = convertYesNoValueCodedToBoolean(valueCoded);
+                        hivRiskAssessmentType.setMoreThan1SexPartnerDuringLast3Months(ans);
+                        break;
+                    default:
+                        break;
                 }
             }
         }
