@@ -170,7 +170,7 @@ public class NDRMasterDictionary {
         Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
 
         SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-        Schema schema = sf.newSchema(getClass().getResource("/resource/NDR 1.3.xsd"));
+        Schema schema = sf.newSchema(getClass().getResource("/resource/NDR 1.4.xsd"));
 
         jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
         jaxbMarshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");

@@ -1157,7 +1157,7 @@ public class DataPumpDao implements model.datapump.DataAccess {
                     container = NDRDictionary.createContainer(ipName, ipCode, "UPDATED");
                     ptsBiometricInfo = getBiometricInfoForPatient(patientID);
                     if (!ptsBiometricInfo.isEmpty()) {
-                        System.out.println("I contain something"+ ptsBiometricInfo.size());
+                        System.out.println("I contain something "+ ptsBiometricInfo.size());
                         fingerPrintType = NDRDictionary.createFingerPrintType(ptsBiometricInfo);
                     }
                     individual = NDRDictionary.createIndividualReport();
@@ -2571,7 +2571,7 @@ public class DataPumpDao implements model.datapump.DataAccess {
                      from the Obs List.
          */
         int obsGroupID = getObsIDOfConceptInList(165724, 27, obsList, visitDate);
-        System.out.println("Obs ID of ARV Medication: " + obsGroupID);
+        //System.out.println("Obs ID of ARV Medication: " + obsGroupID);
         obsPin = getConceptForFormInGroup(159368, 27, obsList, visitDate, obsGroupID);
         //System.out.println("Prescribed regimen duration: "+obsPin.getValueNumeric());
         if (obsPin != null) {
@@ -3210,7 +3210,7 @@ public class DataPumpDao implements model.datapump.DataAccess {
                 //dayVal = 30;
             //}
         }*/
-        System.out.println("Days val: " + dayVal);
+        //System.out.println("Days val: " + dayVal);
         DateTime startDateTime = new DateTime(startDate);
         DateTime stopDateTime = startDateTime.plusDays(dayVal);
         stopDate = stopDateTime.toDate();
