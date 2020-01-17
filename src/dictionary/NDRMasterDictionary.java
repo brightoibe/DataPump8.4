@@ -64,7 +64,7 @@ import util.LocationMap;
  */
 public class NDRMasterDictionary {
 
-    private final static String schemaVersion = "1.3";
+    private final static String schemaVersion = "1.4";
     private final static String HIV_NDR_CONDITION_CODE = "86406008";
     private final String PROGRAM_AREA_CODE = "HIV";
     private String validator="";
