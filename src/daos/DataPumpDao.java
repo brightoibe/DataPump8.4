@@ -1166,6 +1166,7 @@ public class DataPumpDao implements model.datapump.DataAccess {
                     patientDemographicType = NDRDictionary.createPatientDemographics(pts, loc, obsList, locMap);
                     patientDemographicType.setFingerPrints(fingerPrintType);
                     individual.setPatientDemographics(patientDemographicType);
+                    ptsBiometricInfo.clear();
                     conditionType = NDRDictionary.createConiditionTypeWithProgramArea(pts);
                     Boolean deaseased = patientDemographicType.isPatientDeceasedIndicator();
                     if (deaseased == null) {
@@ -7385,12 +7386,17 @@ public class DataPumpDao implements model.datapump.DataAccess {
         PreparedStatement ps = prepareQuery(sql_text);
         ResultSet rs = null;
         List<BiometricInfo> biometricInfoList = new ArrayList<>();
+        BiometricInfo biometricinfo=null;
         try {
             ps.setInt(1, patientID);
             rs = ps.executeQuery();
             while (rs.next()) {
                 System.out.println("Patient ID: "+ rs.getInt("patient_Id")+" Biometric ID: "+rs.getInt("biometricInfo_Id"));
-                biometricInfoList.add(createBiometricInfo(rs));
+                biometricinfo=createBiometricInfo(rs);
+                if(biometricinfo!=null){
+                    biometricInfoList.add(biometricinfo);
+                }
+                
             }
             cleanUp(rs, ps);
         } catch (SQLException ex) {
