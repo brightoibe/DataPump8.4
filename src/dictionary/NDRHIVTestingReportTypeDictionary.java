@@ -12,6 +12,7 @@ import com.inductivehealth.ndr.schema.IndexNotificationServicesType;
 import com.inductivehealth.ndr.schema.KnowledgeAssessmentType;
 import com.inductivehealth.ndr.schema.PostTestCounsellingType;
 import com.inductivehealth.ndr.schema.PreTestInformationType;
+import com.inductivehealth.ndr.schema.RecencyTestingType;
 import com.inductivehealth.ndr.schema.SyndromicSTIScreeningType;
 import java.util.HashMap;
 import java.util.List;
@@ -131,7 +132,20 @@ public class NDRHIVTestingReportTypeDictionary {
         HIVTestResultType hivTestResultType = new HIVTestResultType();
         return hivTestResultType;
     }
-
+    public RecencyTestingType createRecencyTestingType(List<Obs> obsList, Demographics pts){
+        RecencyTestingType recencyTestResultType=null;
+        int conceptID = 0, valueCoded = 0;
+        if(!obsList.isEmpty()){
+            recencyTestResultType=new RecencyTestingType();
+            for(Obs obs: obsList){
+                conceptID=obs.getConceptID();
+                switch(conceptID){
+                    
+                }
+            }
+        }
+        return recencyTestResultType;
+    }
     public PostTestCounsellingType createPostTestCounsellingType(List<Obs> obsList, Demographics pts) {
         PostTestCounsellingType postTest = new PostTestCounsellingType();
         return postTest;
@@ -356,5 +370,6 @@ public class NDRHIVTestingReportTypeDictionary {
         }
         return syndromicSTIScreeningType;
     }
+    
 
 }
