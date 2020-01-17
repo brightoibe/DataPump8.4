@@ -232,6 +232,11 @@ public class NDRHIVTestingReportTypeDictionary {
                         ans = convertYesNoValueCodedToBoolean(valueCoded);
                         hivRiskAssessmentType.setEverHadSexualIntercourse(ans);
                         break;
+                    case 1063://Blood transfusion in last 3 months
+                        valueCoded = obs.getValueCoded();
+                        ans = convertYesNoValueCodedToBoolean(valueCoded);
+                        hivRiskAssessmentType.setBloodTransfussionInLast3Months(ans);
+                        break;
                 }
             }
         }
