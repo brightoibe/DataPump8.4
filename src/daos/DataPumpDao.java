@@ -126,7 +126,7 @@ public class DataPumpDao implements model.datapump.DataAccess {
     private FileManager mgr;
     private Map<Integer, String> pepfarDictionary, hospIDDictionary,
             locationDictionary, otherIDDictionary, ehnidDictionary,
-            drugDictionary, idLocationDictionary, valueCodedDictionary,
+            drugDictionary,htsClientCodeDictionary, idLocationDictionary, valueCodedDictionary,
             formNamesDictionary;
     private HashMap<Integer, PatientRegimen> firstRegimenDictionary;
     private ArrayList<model.datapump.Demographics> patientDemoList2;
@@ -8637,11 +8637,29 @@ public class DataPumpDao implements model.datapump.DataAccess {
             screen.showError(ex.getMessage());
         }
     }
-
     public HashMap<Integer, String> getAllPatientPepfarIDs() {
         ResultSet rs = null;
         HashMap<Integer, String> map = new HashMap<Integer, String>();
         String query = "select patient_id,identifier from patient_identifier where identifier_type=4 and voided=0";
+        PreparedStatement ps = prepareQuery(query);
+        try {
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                map.put(rs.getInt("patient_id"), rs.getString("identifier"));
+            }
+            rs.close();
+            ps.close();
+        } catch (SQLException ex) {
+            screen.updateStatus(ex.getMessage());
+            ex.printStackTrace();
+        }
+        return map;
+    }
+
+    public HashMap<Integer, String> getAllPatientHTSIDs() {
+        ResultSet rs = null;
+        HashMap<Integer, String> map = new HashMap<Integer, String>();
+        String query = "select patient_id,identifier from patient_identifier where identifier_type=8 and voided=0";
         PreparedStatement ps = prepareQuery(query);
         try {
             rs = ps.executeQuery();
@@ -9614,6 +9632,7 @@ public class DataPumpDao implements model.datapump.DataAccess {
 
     public void loadDictionaries() {
         loadPepfarIDDictionary();
+        loadHTSIDDictionary();
         loadPatientAddress();
         loadPatientProgram();
         loadPeadEnrollment();
@@ -9655,6 +9674,15 @@ public class DataPumpDao implements model.datapump.DataAccess {
         pepfarDictionary = getAllPatientPepfarIDs();
         duration = calculateDuration(startTime);
         screen.updateStatus("PEPFAR_ID dictionary loaded in " + duration + " secs");
+
+    }
+    private void loadHTSIDDictionary() {
+        long startTime = System.currentTimeMillis();
+        long duration = 0L;
+        ResultSet rs = null;
+        htsClientCodeDictionary = getAllPatientHTSIDs();
+        duration = calculateDuration(startTime);
+        screen.updateStatus("HTS ID dictionary loaded in " + duration + " secs");
 
     }
 
