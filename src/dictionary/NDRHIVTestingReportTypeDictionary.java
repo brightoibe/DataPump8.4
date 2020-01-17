@@ -14,6 +14,7 @@ import com.inductivehealth.ndr.schema.PostTestCounsellingType;
 import com.inductivehealth.ndr.schema.PreTestInformationType;
 import com.inductivehealth.ndr.schema.RecencyTestingType;
 import com.inductivehealth.ndr.schema.SyndromicSTIScreeningType;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -133,14 +134,32 @@ public class NDRHIVTestingReportTypeDictionary {
         return hivTestResultType;
     }
     public RecencyTestingType createRecencyTestingType(List<Obs> obsList, Demographics pts){
+        /*
+            	HIV Recency Test Name (165849) 	
+                HIV Recency Test Date (165850)
+                Rapid recency assay (165853) 
+                    -Recent -> Recent (165852)
+                    -Long Term -> Long Term (165851) 
+                Sample test date (165854)
+                HIV VIRAL LOAD (856) 
+                Final HIV recent infection testing algorithm result (165856)
+                    -Long Term -> Long Term (165851) 
+                    -Recent -> Recent (165852)
+                    -Long Term -> Long Term (165851)         
+        */
         RecencyTestingType recencyTestResultType=null;
         int conceptID = 0, valueCoded = 0;
+        String valueText="";
+        Date valueDate=null;
         if(!obsList.isEmpty()){
             recencyTestResultType=new RecencyTestingType();
             for(Obs obs: obsList){
                 conceptID=obs.getConceptID();
                 switch(conceptID){
-                    
+                    case 165849://HIV Recency Test Name (165849)
+                        valueText=obs.getValueText();
+                        recencyTestResultType.setTestName(valueText);
+                        break;
                 }
             }
         }
