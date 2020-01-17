@@ -319,7 +319,7 @@ public class NDRHIVTestingReportTypeDictionary {
             Complaints of vaginal discharge or burning when urinating? (165809) 	
             Complaints of lower abdominal pains with or without vaginal discharge (165810) 	 	
             Complaints of genital sore(s) or swollen inguinal lymph nodes with or without pains (165813) 		
-            STI Screening Risk Score (165814)
+            Complaints of scrotal swelling and pain (165812)
          */
         SyndromicSTIScreeningType syndromicSTIScreeningType = null;
         int conceptID = 0, valueCoded = 0;
@@ -348,6 +348,8 @@ public class NDRHIVTestingReportTypeDictionary {
                         valueCoded = obs.getValueCoded();
                         ans = convertYesNoValueCodedToBoolean(valueCoded);
                         syndromicSTIScreeningType.setScrotalSwellingAndPain(ans);
+                        break;
+                    default:
                         break;
                 }
             }
