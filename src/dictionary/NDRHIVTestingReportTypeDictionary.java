@@ -148,6 +148,24 @@ public class NDRHIVTestingReportTypeDictionary {
     }
     public TestResultType createTestResultType(List<Obs> obsList, Demographics pts){
         TestResultType testResultType=null;
+        /*
+            HIV Screening Test (165840)
+              -Reactive -> REACTIVE (1228)
+              -Non-reactive -> NON-REACTIVE (1229)
+            HIV Screening Test Date (165844)
+            HIV Confirmatory Test (165841) 
+              -Reactive -> REACTIVE (1228)
+              -Non-reactive -> NON-REACTIVE (1229)
+            HIV Confirmatory Test Date (165845)
+            Tie Breaker (165842) 
+              -Reactive -> REACTIVE (1228)
+              -Non-reactive -> NON-REACTIVE (1229)  
+            Tie Breaker Date (165846) 
+            HIV Final Result (165843) 
+              -Positive -> Positive (703)
+              -Negative -> Negative (664) 
+           
+        */
         return testResultType;
     }
     public RecencyTestingType createRecencyTestingType(List<Obs> obsList, Demographics pts) throws DatatypeConfigurationException{
