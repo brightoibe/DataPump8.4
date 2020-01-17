@@ -163,6 +163,7 @@ public class NDRHIVTestingReportTypeDictionary {
         int conceptID = 0, valueCoded = 0;
         String valueText="";
         Date valueDate=null;
+        double valueNumeric=0.0;
         CodedSimpleType cst=null;
         if(!obsList.isEmpty()){
             recencyTestResultType=new RecencyTestingType();
@@ -185,6 +186,17 @@ public class NDRHIVTestingReportTypeDictionary {
                         valueDate=obs.getValueDate();
                         recencyTestResultType.setViralLoadConfirmationTestDate(Client.getXmlDate(valueDate));
                         break;
+                    case 856 ://HIV VIRAL LOAD (856)
+                        valueNumeric=obs.getValueNumeric();
+                        recencyTestResultType.setViralLoadConfirmationResult(String.valueOf(valueNumeric));
+                        break;
+                    case 165856://Final HIV recent infection testing algorithm result (165856)
+                        valueCoded=obs.getValueCoded();
+                        recencyTestResultType.setFinalRecencyTestResult(getNDRCodedValue(valueCoded));
+                        break;
+                    default:
+                        break;
+                        
                         
                         
               
