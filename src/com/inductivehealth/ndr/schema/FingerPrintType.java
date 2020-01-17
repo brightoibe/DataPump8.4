@@ -64,9 +64,9 @@ public class FingerPrintType {
     protected LeftHandType leftHand;
     protected String source;
     
-    @XmlAttribute
+    //@XmlAttribute
 	//@XmlElement(name = "present", required = true)
-	private boolean present;
+	//private boolean present;
 
     /**
      * Gets the value of the dateCaptured property.
@@ -167,15 +167,15 @@ public class FingerPrintType {
     /**
      * @return the present
      */
-    public boolean isPresent() {
-        return present;
-    }
+    //public boolean isPresent() {
+        //return present;
+    //}
 
     /**
      * @param present the present to set
      */
-    public void setPresent(boolean present) {
-        this.present = present;
-    }
+   // public void setPresent(boolean present) {
+        //this.present = present;
+    //}
 
 }

@@ -1150,7 +1150,7 @@ public class DataPumpDao implements model.datapump.DataAccess {
             allVisitList = loadAllVisit(idSet);
             for (model.datapump.Demographics pts : patients) {
                 int patientID = pts.getPatientID();
-                if (StringUtils.isNotBlank(pts.getPepfarID()) && !pts.getGender().isEmpty() && pts.getDateOfBirth() != null && pts.getPatientID()==16041) {
+                if (StringUtils.isNotBlank(pts.getPepfarID()) && !pts.getGender().isEmpty() && pts.getDateOfBirth() != null ) {
                     //Get IP Name and IP Code from global properties
                     ipName = propertyMap.get("partner_full_name");
                     ipCode = propertyMap.get("partner_short_name");
