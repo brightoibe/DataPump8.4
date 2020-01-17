@@ -312,9 +312,17 @@ public class NDRHIVTestingReportTypeDictionary {
         }
         return clinicalTBScreeningType;
     }
-    public SyndromicSTIScreeningType createSyndromicSTIScreeningType(){
-        SyndromicSTIScreeningType syndromicSTIScreeningType =null;
-        
+
+    public SyndromicSTIScreeningType createSyndromicSTIScreeningType() {
+        /*
+            Syndromic STI Screening
+            Complaints of vaginal discharge or burning when urinating? (165809) 	
+            Complaints of lower abdominal pains with or without vaginal discharge (165810) 	 	
+            Complaints of genital sore(s) or swollen inguinal lymph nodes with or without pains (165813) 		
+            STI Screening Risk Score (165814)
+         */
+        SyndromicSTIScreeningType syndromicSTIScreeningType = null;
+
         return syndromicSTIScreeningType;
     }
 

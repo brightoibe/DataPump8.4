@@ -96,7 +96,8 @@ public class NDRMasterDictionary {
     public Container createContainer(String ipName, String ipCode, String messageStatus) throws DatatypeConfigurationException {
         messageID = UUID.randomUUID().toString();
         container = new Container();
-        validator=UUID.randomUUID().toString();
+        //validator=UUID.randomUUID().toString();
+        validator="lvVO/htxEFaEt0jw3GLe83UH9CzPxNdH7L/AT5Jip1N+Xt0viNtK/Zo6Kj6sFe+TK8m5jJiaq7avm/D1EKnIF9+DcP7pCXktsuF1ZOWqsrI=||bHZWTy9odHhFRmFFdDBqdzNHTGU4M1VIOUN6UHhOZEg3TC9BVDVKaXAxTitYdDB2aU50Sy9abzZLajZzRmUrVEs4bTVqSmlhcTdhdm0vRDFFS25JRjkrRGNQN3BDWGt0c3VGMVpPV3Fzckk9||1.1";
         //Set the Header Information
         @SuppressWarnings("UnusedAssignment")
         MessageHeaderType header = new MessageHeaderType();
