@@ -146,7 +146,10 @@ public class NDRHIVTestingReportTypeDictionary {
         HIVTestResultType hivTestResultType = new HIVTestResultType();
         return hivTestResultType;
     }
-
+    public IndexNotificationServicesType createIndexnotificationServiceType(){
+        IndexNotificationServicesType indexNotofication=null;
+        return indexNotofication;
+    }
     public TestResultType createTestResultType(List<Obs> obsList, Demographics pts) throws DatatypeConfigurationException {
         TestResultType testResultType = null;
         int conceptID = 0, valueCoded = 0;
@@ -204,6 +207,8 @@ public class NDRHIVTestingReportTypeDictionary {
                     case 165843://HIV Final Result (165843) 
                         valueCoded=obs.getValueCoded();
                         testResultType.setFinalTestResult(getNDRCodedValue(valueCoded));
+                        break;
+                    default:
                         break;
                 }
             }
