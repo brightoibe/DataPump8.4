@@ -5,6 +5,7 @@
  */
 package dictionary;
 
+import com.inductivehealth.ndr.schema.HIVRiskAssessmentType;
 import com.inductivehealth.ndr.schema.HIVTestResultType;
 import com.inductivehealth.ndr.schema.IndexNotificationServicesType;
 import com.inductivehealth.ndr.schema.KnowledgeAssessmentType;
@@ -201,6 +202,18 @@ public class NDRHIVTestingReportTypeDictionary {
         }
 
         return knowledgeAssessmentType;
+    }
+    public HIVRiskAssessmentType createHIVRiskAssessmentType(List<Obs> obsList, Demographics pts){
+        HIVRiskAssessmentType hivRiskAssessmentType=null;
+        int conceptID=0,valueCoded=0;
+        boolean ans=false;
+        if(!obsList.isEmpty()){
+            hivRiskAssessmentType=new HIVRiskAssessmentType();
+            switch(conceptID){
+                 
+            }
+        }
+        return hivRiskAssessmentType;
     }
 
 }
