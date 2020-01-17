@@ -148,6 +148,11 @@ public class NDRHIVTestingReportTypeDictionary {
     }
     public TestResultType createTestResultType(List<Obs> obsList, Demographics pts){
         TestResultType testResultType=null;
+        int conceptID = 0, valueCoded = 0;
+        String valueText="";
+        Date valueDate=null;
+        double valueNumeric=0.0;
+        CodedSimpleType cst=null;
         /*
             HIV Screening Test (165840)
               -Reactive -> REACTIVE (1228)
@@ -166,6 +171,19 @@ public class NDRHIVTestingReportTypeDictionary {
               -Negative -> Negative (664) 
            
         */
+        if(!obsList.isEmpty()){
+            testResultType=new TestResultType();
+            for(Obs obs: obsList){
+                conceptID=obs.getConceptID();
+                switch(conceptID){
+                    case 165840://HIV Screening Test (165840)
+                    valueCoded=obs.getValueCoded();
+                    testResultType.setScreeningTestResult(getNDRCodedValue(valueCoded));
+                    break;
+                    //case 165844: HIV Screening Test Date (165844)
+                }
+            }
+        }
         return testResultType;
     }
     public RecencyTestingType createRecencyTestingType(List<Obs> obsList, Demographics pts) throws DatatypeConfigurationException{
