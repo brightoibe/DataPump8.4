@@ -12,6 +12,7 @@ import com.inductivehealth.ndr.schema.IndexNotificationServicesType;
 import com.inductivehealth.ndr.schema.KnowledgeAssessmentType;
 import com.inductivehealth.ndr.schema.PostTestCounsellingType;
 import com.inductivehealth.ndr.schema.PreTestInformationType;
+import com.inductivehealth.ndr.schema.SyndromicSTIScreeningType;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -310,6 +311,11 @@ public class NDRHIVTestingReportTypeDictionary {
             }
         }
         return clinicalTBScreeningType;
+    }
+    public SyndromicSTIScreeningType createSyndromicSTIScreeningType(){
+        SyndromicSTIScreeningType syndromicSTIScreeningType =null;
+        
+        return syndromicSTIScreeningType;
     }
 
 }
