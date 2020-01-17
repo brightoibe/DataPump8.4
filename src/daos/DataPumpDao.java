@@ -10012,7 +10012,7 @@ public class DataPumpDao implements model.datapump.DataAccess {
                 + "(select obs.person_id as patient_id,obs.obs_datetime as visit_date from obs where obs.voided=0\n"
                 + "union\n"
                 + "select orders.patient_id,orders.start_date from orders) as sinner group by sinner.patient_id";*/
-        String sql_text = "select encounter.patient_id, MIN(encounter.encounter_datetime) as first_visit_dt from encounter where encounter.voided=0 and encounter.encounter_datetime >'2001-01-01' ";
+        String sql_text = "select encounter.patient_id, MIN(encounter.encounter_datetime) as first_visit_dt from encounter where encounter.voided=0 and encounter.encounter_datetime >'2001-01-01' GROUP BY encounter.patient_id ";
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
