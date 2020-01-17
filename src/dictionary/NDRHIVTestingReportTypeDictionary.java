@@ -185,6 +185,26 @@ public class NDRHIVTestingReportTypeDictionary {
                         valueDate=obs.getValueDate();
                         testResultType.setScreeningTestResultDate(Client.getXmlDate(valueDate));
                         break;
+                    case 165841://HIV Confirmatory Test (165841) 
+                        valueCoded=obs.getValueCoded();
+                        testResultType.setConfirmatoryTestResult(getNDRCodedValue(valueCoded));
+                        break;
+                    case 165845://HIV Confirmatory Test Date (165845) 
+                        valueDate=obs.getValueDate();
+                        testResultType.setConfirmatoryTestResultDate(Client.getXmlDate(valueDate));
+                        break;
+                    case 165842://Tie Breaker (165842)
+                        valueCoded=obs.getValueCoded();
+                        testResultType.setTieBreakerTestResult(getNDRCodedValue(valueCoded));
+                        break;
+                    case 165846://Tie Breaker Date (165846) 
+                        valueDate=obs.getValueDate();
+                        testResultType.setTieBreakerTestResultDate(Client.getXmlDate(valueDate));
+                        break;
+                    case 165843://HIV Final Result (165843) 
+                        valueCoded=obs.getValueCoded();
+                        testResultType.setFinalTestResult(getNDRCodedValue(valueCoded));
+                        break;
                 }
             }
         }
