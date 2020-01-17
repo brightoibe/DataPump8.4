@@ -304,6 +304,8 @@ public class NDRHIVTestingReportTypeDictionary {
                         ans = convertYesNoValueCodedToBoolean(valueCoded);
                         clinicalTBScreeningType.setNightSweats(ans);
                         break;
+                    default:
+                        break;
                 }
             }
         }
