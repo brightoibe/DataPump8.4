@@ -110,16 +110,16 @@ public class NDRHIVTestingReportTypeDictionary {
 
     public PreTestInformationType createPreTestInformationType(List<Obs> obsList, Demographics pts) {
         PreTestInformationType preTest = null;
-        
-        
+
         return preTest;
     }
-    public boolean convertYesNoValueCodedToBoolean(int valueCoded){
-        boolean ans=false;
-        if(valueCoded==1065){
-            ans=true;
-        }else if(valueCoded==1066){
-            ans=false;
+
+    public boolean convertYesNoValueCodedToBoolean(int valueCoded) {
+        boolean ans = false;
+        if (valueCoded == 1065) {
+            ans = true;
+        } else if (valueCoded == 1066) {
+            ans = false;
         }
         return ans;
     }
@@ -138,7 +138,8 @@ public class NDRHIVTestingReportTypeDictionary {
         IndexNotificationServicesType indexService = new IndexNotificationServicesType();
         return indexService;
     }
-    public KnowledgeAssessmentType createKnowledgeAssessmentType(List<Obs> obsList, Demographics pts){
+
+    public KnowledgeAssessmentType createKnowledgeAssessmentType(List<Obs> obsList, Demographics pts) {
         /*
            Previously tested HIV negative (165799)
            Client Pregnant (Test and ensure linkage to PMTCT Program)(1434) 	
@@ -148,52 +149,54 @@ public class NDRHIVTestingReportTypeDictionary {
            Client informed about possible test results 	(165884)
            Informed consent for HIV testing given (1710)
          */
-        KnowledgeAssessmentType knowledgeAssessmentType=new KnowledgeAssessmentType();
+        KnowledgeAssessmentType knowledgeAssessmentType = null;
         int conceptID = 0, valueCoded = 0;
-        boolean ans=false;
+        boolean ans = false;
         if (!obsList.isEmpty()) {
+            knowledgeAssessmentType = new KnowledgeAssessmentType();
             for (Obs obs : obsList) {
-               conceptID=obs.getConceptID();
-               //valueCoded=obs.getValueCoded();
-               switch(conceptID){
-                   case 165799://Previously tested HIV negative
-                       valueCoded=obs.getValueCoded();
-                       ans=convertYesNoValueCodedToBoolean(valueCoded);
-                       knowledgeAssessmentType.setPreviouslyTestedHIVNegative(ans);
-                       break;
-                   case 1434://Client Pregnant (Test and ensure linkage to PMTCT Program)
-                       valueCoded=obs.getValueCoded();
-                       ans=convertYesNoValueCodedToBoolean(valueCoded);
-                       knowledgeAssessmentType.setClientPregnant(ans);
-                       break;
-                   case 165801://Client informed about HIV transmission routes (165801)
-                       valueCoded=obs.getValueCoded();
-                       ans=convertYesNoValueCodedToBoolean(valueCoded);
-                       knowledgeAssessmentType.setClientInformedAboutHIVTransmissionRoutes(ans);
-                       break;
-                   case 165802://Client informed about risk factors for HIV transmission
-                       valueCoded=obs.getValueCoded();
-                       ans=convertYesNoValueCodedToBoolean(valueCoded);
-                       knowledgeAssessmentType.setClientInformedOfHIVTransmissionRiskFactors(ans);
-                       break;
-                   case 165804://Client informed on preventing HIV transmission methods
-                       valueCoded=obs.getValueCoded();
-                       ans=convertYesNoValueCodedToBoolean(valueCoded);
-                       knowledgeAssessmentType.setClientInformedAboutPreventingHIV(ans);
-                       break;
-                   case 165884://Client informed about possible test results
-                       valueCoded=obs.getValueCoded();
-                       ans=convertYesNoValueCodedToBoolean(valueCoded);
-                       knowledgeAssessmentType.setClientInformedAboutPossibleTestResults(ans);
-                       break;
-                   case 1710:// Informed consent for HIV testing given
-                       
-                    
-                       
-                   
-                       
-                       
-               }
+                conceptID = obs.getConceptID();
+                //valueCoded=obs.getValueCoded();
+                switch (conceptID) {
+                    case 165799://Previously tested HIV negative
+                        valueCoded = obs.getValueCoded();
+                        ans = convertYesNoValueCodedToBoolean(valueCoded);
+                        knowledgeAssessmentType.setPreviouslyTestedHIVNegative(ans);
+                        break;
+                    case 1434://Client Pregnant (Test and ensure linkage to PMTCT Program)
+                        valueCoded = obs.getValueCoded();
+                        ans = convertYesNoValueCodedToBoolean(valueCoded);
+                        knowledgeAssessmentType.setClientPregnant(ans);
+                        break;
+                    case 165801://Client informed about HIV transmission routes (165801)
+                        valueCoded = obs.getValueCoded();
+                        ans = convertYesNoValueCodedToBoolean(valueCoded);
+                        knowledgeAssessmentType.setClientInformedAboutHIVTransmissionRoutes(ans);
+                        break;
+                    case 165802://Client informed about risk factors for HIV transmission
+                        valueCoded = obs.getValueCoded();
+                        ans = convertYesNoValueCodedToBoolean(valueCoded);
+                        knowledgeAssessmentType.setClientInformedOfHIVTransmissionRiskFactors(ans);
+                        break;
+                    case 165804://Client informed on preventing HIV transmission methods
+                        valueCoded = obs.getValueCoded();
+                        ans = convertYesNoValueCodedToBoolean(valueCoded);
+                        knowledgeAssessmentType.setClientInformedAboutPreventingHIV(ans);
+                        break;
+                    case 165884://Client informed about possible test results
+                        valueCoded = obs.getValueCoded();
+                        ans = convertYesNoValueCodedToBoolean(valueCoded);
+                        knowledgeAssessmentType.setClientInformedAboutPossibleTestResults(ans);
+                        break;
+                    case 1710:// Informed consent for HIV testing given
+                        valueCoded = obs.getValueCoded();
+                        ans = convertYesNoValueCodedToBoolean(valueCoded);
+                        knowledgeAssessmentType.setInformedConsentForHIVTestingGiven(ans);
+                        break;
+                    default:
+                        break;
+
+                }
             }
         }
 
