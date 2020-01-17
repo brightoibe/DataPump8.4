@@ -192,6 +192,16 @@ public class NDRHIVTestingReportTypeDictionary {
                        valueCoded=obs.getValueCoded();
                        partnerNotification.setIndexRelation(getNDRCodedValue(valueCoded));
                        break;
+                   case 166021://Index Descriptive Address (166021) 
+                       valueText=obs.getValueText();
+                       partnerNotification.setDescriptiveAddress(valueText);
+                       break;
+                   case 166022://Index Relation Phone (166022)
+                       valueText=obs.getValueText();
+                       partnerNotification.setPhoneNumber(valueText);
+                       break;
+                   default:
+                       break;
                }
             }
         }
