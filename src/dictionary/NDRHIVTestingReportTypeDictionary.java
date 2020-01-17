@@ -147,14 +147,35 @@ public class NDRHIVTestingReportTypeDictionary {
         HIVTestResultType hivTestResultType = new HIVTestResultType();
         return hivTestResultType;
     }
-    public IndexNotificationServicesType createIndexnotificationServiceType(){
-        IndexNotificationServicesType indexNotofication=null;
+
+    public IndexNotificationServicesType createIndexnotificationServiceType() {
+        IndexNotificationServicesType indexNotofication = null;
         return indexNotofication;
     }
-    public PartnerNotificationType createPartnerNotificationType(){
-        PartnerNotificationType partnerNotification=null;
+
+    public PartnerNotificationType createPartnerNotificationType(List<Obs> obsList, Demographics pts) {
+        /*
+            Partner full name (161135) 
+            Partner Gender (165857) 
+	       -Male -> Male (165184)
+               -Female -> FEMALE (165185)
+            Index type (165798) 	
+               -Biological -> Biological (165796)
+               -Sexual -> Sexual (165797)
+               -Social(needle sharing) -> Social (165795)
+            Index Descriptive Address (166021) 
+            Index Relation Phone (166022)
+         */
+        PartnerNotificationType partnerNotification = null;
+        if (!obsList.isEmpty()) {
+            partnerNotification = new PartnerNotificationType();
+            for (Obs obs : obsList) {
+
+            }
+        }
         return partnerNotification;
     }
+
     public TestResultType createTestResultType(List<Obs> obsList, Demographics pts) throws DatatypeConfigurationException {
         TestResultType testResultType = null;
         int conceptID = 0, valueCoded = 0;
@@ -190,27 +211,27 @@ public class NDRHIVTestingReportTypeDictionary {
                         testResultType.setScreeningTestResult(getNDRCodedValue(valueCoded));
                         break;
                     case 165844: //HIV Screening Test Date (165844)
-                        valueDate=obs.getValueDate();
+                        valueDate = obs.getValueDate();
                         testResultType.setScreeningTestResultDate(Client.getXmlDate(valueDate));
                         break;
                     case 165841://HIV Confirmatory Test (165841) 
-                        valueCoded=obs.getValueCoded();
+                        valueCoded = obs.getValueCoded();
                         testResultType.setConfirmatoryTestResult(getNDRCodedValue(valueCoded));
                         break;
                     case 165845://HIV Confirmatory Test Date (165845) 
-                        valueDate=obs.getValueDate();
+                        valueDate = obs.getValueDate();
                         testResultType.setConfirmatoryTestResultDate(Client.getXmlDate(valueDate));
                         break;
                     case 165842://Tie Breaker (165842)
-                        valueCoded=obs.getValueCoded();
+                        valueCoded = obs.getValueCoded();
                         testResultType.setTieBreakerTestResult(getNDRCodedValue(valueCoded));
                         break;
                     case 165846://Tie Breaker Date (165846) 
-                        valueDate=obs.getValueDate();
+                        valueDate = obs.getValueDate();
                         testResultType.setTieBreakerTestResultDate(Client.getXmlDate(valueDate));
                         break;
                     case 165843://HIV Final Result (165843) 
-                        valueCoded=obs.getValueCoded();
+                        valueCoded = obs.getValueCoded();
                         testResultType.setFinalTestResult(getNDRCodedValue(valueCoded));
                         break;
                     default:
