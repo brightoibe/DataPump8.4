@@ -62,11 +62,13 @@ public class NDRHIVTestingReportTypeDictionary {
     public NDRHIVTestingReportTypeDictionary() {
         loadDictionary();
     }
-    public String getNDRCodedValue(int valueCoded){
-        String code=ndrCodingMap.get(valueCoded);
+
+    public String getNDRCodedValue(int valueCoded) {
+        String code = ndrCodingMap.get(valueCoded);
         return code;
-        
+
     }
+
     private void loadDictionary() {
         ndrCodingMap = new HashMap<Integer, String>();
         //Setting
@@ -115,9 +117,7 @@ public class NDRHIVTestingReportTypeDictionary {
         //HCVTestResult (Same as HBVTestResult)
         //Rapid recency assay (165853)
         ndrCodingMap.put(165852, "R");// Recent -> Recent (165852)
-        ndrCodingMap.put(165851,"L");//Long Term -> Long Term (165851)
-
-
+        ndrCodingMap.put(165851, "L");//Long Term -> Long Term (165851)
 
     }
 
@@ -146,13 +146,14 @@ public class NDRHIVTestingReportTypeDictionary {
         HIVTestResultType hivTestResultType = new HIVTestResultType();
         return hivTestResultType;
     }
-    public TestResultType createTestResultType(List<Obs> obsList, Demographics pts){
-        TestResultType testResultType=null;
+
+    public TestResultType createTestResultType(List<Obs> obsList, Demographics pts) throws DatatypeConfigurationException {
+        TestResultType testResultType = null;
         int conceptID = 0, valueCoded = 0;
-        String valueText="";
-        Date valueDate=null;
-        double valueNumeric=0.0;
-        CodedSimpleType cst=null;
+        String valueText = "";
+        Date valueDate = null;
+        double valueNumeric = 0.0;
+        CodedSimpleType cst = null;
         /*
             HIV Screening Test (165840)
               -Reactive -> REACTIVE (1228)
@@ -170,23 +171,27 @@ public class NDRHIVTestingReportTypeDictionary {
               -Positive -> Positive (703)
               -Negative -> Negative (664) 
            
-        */
-        if(!obsList.isEmpty()){
-            testResultType=new TestResultType();
-            for(Obs obs: obsList){
-                conceptID=obs.getConceptID();
-                switch(conceptID){
+         */
+        if (!obsList.isEmpty()) {
+            testResultType = new TestResultType();
+            for (Obs obs : obsList) {
+                conceptID = obs.getConceptID();
+                switch (conceptID) {
                     case 165840://HIV Screening Test (165840)
-                    valueCoded=obs.getValueCoded();
-                    testResultType.setScreeningTestResult(getNDRCodedValue(valueCoded));
-                    break;
-                    //case 165844: HIV Screening Test Date (165844)
+                        valueCoded = obs.getValueCoded();
+                        testResultType.setScreeningTestResult(getNDRCodedValue(valueCoded));
+                        break;
+                    case 165844: //HIV Screening Test Date (165844)
+                        valueDate=obs.getValueDate();
+                        testResultType.setScreeningTestResultDate(Client.getXmlDate(valueDate));
+                        break;
                 }
             }
         }
         return testResultType;
     }
-    public RecencyTestingType createRecencyTestingType(List<Obs> obsList, Demographics pts) throws DatatypeConfigurationException{
+
+    public RecencyTestingType createRecencyTestingType(List<Obs> obsList, Demographics pts) throws DatatypeConfigurationException {
         /*
             	HIV Recency Test Name (165849) 	
                 HIV Recency Test Date (165850)
@@ -199,40 +204,40 @@ public class NDRHIVTestingReportTypeDictionary {
                     -Long Term -> Long Term (165851) 
                     -Recent -> Recent (165852)
                     -Long Term -> Long Term (165851)         
-        */
-        RecencyTestingType recencyTestResultType=null;
+         */
+        RecencyTestingType recencyTestResultType = null;
         int conceptID = 0, valueCoded = 0;
-        String valueText="";
-        Date valueDate=null;
-        double valueNumeric=0.0;
-        CodedSimpleType cst=null;
-        if(!obsList.isEmpty()){
-            recencyTestResultType=new RecencyTestingType();
-            for(Obs obs: obsList){
-                conceptID=obs.getConceptID();
-                switch(conceptID){
+        String valueText = "";
+        Date valueDate = null;
+        double valueNumeric = 0.0;
+        CodedSimpleType cst = null;
+        if (!obsList.isEmpty()) {
+            recencyTestResultType = new RecencyTestingType();
+            for (Obs obs : obsList) {
+                conceptID = obs.getConceptID();
+                switch (conceptID) {
                     case 165849://HIV Recency Test Name (165849)
-                        valueText=obs.getValueText();
+                        valueText = obs.getValueText();
                         recencyTestResultType.setTestName(valueText);
                         break;
                     case 165850://HIV Recency Test Date (165850)
-                        valueDate=obs.getValueDate();
+                        valueDate = obs.getValueDate();
                         recencyTestResultType.setTestDate(Client.getXmlDate(valueDate));
                         break;
                     case 165853://Rapid recency assay (165853) 
-                        valueCoded=obs.getValueCoded();
+                        valueCoded = obs.getValueCoded();
                         recencyTestResultType.setRapidRecencyAssay(getNDRCodedValue(valueCoded));
                         break;
                     case 165854://Sample test date (165854)
-                        valueDate=obs.getValueDate();
+                        valueDate = obs.getValueDate();
                         recencyTestResultType.setViralLoadConfirmationTestDate(Client.getXmlDate(valueDate));
                         break;
-                    case 856 ://HIV VIRAL LOAD (856)
-                        valueNumeric=obs.getValueNumeric();
+                    case 856://HIV VIRAL LOAD (856)
+                        valueNumeric = obs.getValueNumeric();
                         recencyTestResultType.setViralLoadConfirmationResult(String.valueOf(valueNumeric));
                         break;
                     case 165856://Final HIV recent infection testing algorithm result (165856)
-                        valueCoded=obs.getValueCoded();
+                        valueCoded = obs.getValueCoded();
                         recencyTestResultType.setFinalRecencyTestResult(getNDRCodedValue(valueCoded));
                         break;
                     default:
@@ -242,6 +247,7 @@ public class NDRHIVTestingReportTypeDictionary {
         }
         return recencyTestResultType;
     }
+
     public PostTestCounsellingType createPostTestCounsellingType(List<Obs> obsList, Demographics pts) {
         PostTestCounsellingType postTest = new PostTestCounsellingType();
         return postTest;
@@ -434,17 +440,17 @@ public class NDRHIVTestingReportTypeDictionary {
         SyndromicSTIScreeningType syndromicSTIScreeningType = null;
         int conceptID = 0, valueCoded = 0;
         boolean ans = false;
-        if(!obsList.isEmpty()){
-            syndromicSTIScreeningType=new SyndromicSTIScreeningType();
-            for(Obs obs: obsList){
-                conceptID=obs.getConceptID();
-                switch(conceptID){
-                    case 165809 ://Complaints of vaginal discharge or burning when urinating? (165809)
+        if (!obsList.isEmpty()) {
+            syndromicSTIScreeningType = new SyndromicSTIScreeningType();
+            for (Obs obs : obsList) {
+                conceptID = obs.getConceptID();
+                switch (conceptID) {
+                    case 165809://Complaints of vaginal discharge or burning when urinating? (165809)
                         valueCoded = obs.getValueCoded();
                         ans = convertYesNoValueCodedToBoolean(valueCoded);
                         syndromicSTIScreeningType.setVaginalDischargeOrBurningWhenUrinating(ans);
                         break;
-                    case 165810 ://Complaints of lower abdominal pains with or without vaginal discharge (165810)
+                    case 165810://Complaints of lower abdominal pains with or without vaginal discharge (165810)
                         valueCoded = obs.getValueCoded();
                         ans = convertYesNoValueCodedToBoolean(valueCoded);
                         syndromicSTIScreeningType.setLowerAbdominalPainsWithOrWithoutVaginalDischarge(ans);
@@ -466,6 +472,5 @@ public class NDRHIVTestingReportTypeDictionary {
         }
         return syndromicSTIScreeningType;
     }
-    
 
 }
