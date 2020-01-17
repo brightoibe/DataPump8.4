@@ -344,6 +344,11 @@ public class NDRHIVTestingReportTypeDictionary {
                         ans = convertYesNoValueCodedToBoolean(valueCoded);
                         syndromicSTIScreeningType.setGenitalSoreOrSwollenInguinalLymphNodes(ans);
                         break;
+                    case 165812://Complaints of scrotal swelling and pain
+                        valueCoded = obs.getValueCoded();
+                        ans = convertYesNoValueCodedToBoolean(valueCoded);
+                        syndromicSTIScreeningType.setScrotalSwellingAndPain(ans);
+                        break;
                 }
             }
         }
