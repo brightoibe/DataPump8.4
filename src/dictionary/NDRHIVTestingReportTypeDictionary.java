@@ -242,6 +242,11 @@ public class NDRHIVTestingReportTypeDictionary {
                         ans = convertYesNoValueCodedToBoolean(valueCoded);
                         hivRiskAssessmentType.setUnprotectedSexWithCasualPartnerinLast3Months(ans);
                         break;
+                    case 164809://STI in last 3 months
+                        valueCoded = obs.getValueCoded();
+                        ans = convertYesNoValueCodedToBoolean(valueCoded);
+                        hivRiskAssessmentType.setSTIInLast3Months(ans);
+                        break;
                     
                 }
             }
