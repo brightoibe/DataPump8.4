@@ -7,6 +7,7 @@ package dictionary;
 
 import com.inductivehealth.ndr.schema.HIVTestResultType;
 import com.inductivehealth.ndr.schema.IndexNotificationServicesType;
+import com.inductivehealth.ndr.schema.KnowledgeAssessmentType;
 import com.inductivehealth.ndr.schema.PostTestCounsellingType;
 import com.inductivehealth.ndr.schema.PreTestInformationType;
 import java.util.HashMap;
@@ -50,11 +51,11 @@ public class NDRHIVTestingReportTypeDictionary {
     private Map<Integer, String> ndrCodingMap = null;
 
     public NDRHIVTestingReportTypeDictionary() {
-      loadDictionary();
+        loadDictionary();
     }
 
     private void loadDictionary() {
-        ndrCodingMap=new HashMap<Integer,String>();
+        ndrCodingMap = new HashMap<Integer, String>();
         //Setting
         ndrCodingMap.put(160539, "1");//Voluntary counseling and testing program 
         ndrCodingMap.put(160529, "2");//Tuberculosis Visit 
@@ -99,28 +100,79 @@ public class NDRHIVTestingReportTypeDictionary {
         ndrCodingMap.put(703, "Pos");//Positive
         ndrCodingMap.put(664, "Neg");//Negative 
         //HCVTestResult (Same as HBVTestResult)
-        
-        
+
     }
-    public HIVTestResultType createHIVTestingResultType(List<Obs> obsList, Demographics demo){
-        HIVTestResultType hivTestResultType=new HIVTestResultType();
+
+    public HIVTestResultType createHIVTestingResultType(List<Obs> obsList, Demographics demo) {
+        HIVTestResultType hivTestResultType = new HIVTestResultType();
         return hivTestResultType;
     }
-    public PreTestInformationType createPreTestInformationType(List<Obs> obsList,Demographics pts){
-        PreTestInformationType preTest=new PreTestInformationType();
+
+    public PreTestInformationType createPreTestInformationType(List<Obs> obsList, Demographics pts) {
+        PreTestInformationType preTest = null;
+        
+        
         return preTest;
     }
-    public HIVTestResultType createHIVTestResultType(List<Obs> obsList,Demographics pts){
-        HIVTestResultType hivTestResultType=new HIVTestResultType();
+    public boolean convertYesNoValueCodedToBoolean(int valueCoded){
+        boolean ans=false;
+        if(valueCoded==1065){
+            ans=true;
+        }else if(valueCoded==1066){
+            ans=false;
+        }
+        return ans;
+    }
+
+    public HIVTestResultType createHIVTestResultType(List<Obs> obsList, Demographics pts) {
+        HIVTestResultType hivTestResultType = new HIVTestResultType();
         return hivTestResultType;
     }
-    public PostTestCounsellingType createPostTestCounsellingType(List<Obs> obsList,Demographics pts){
-        PostTestCounsellingType postTest=new PostTestCounsellingType();
+
+    public PostTestCounsellingType createPostTestCounsellingType(List<Obs> obsList, Demographics pts) {
+        PostTestCounsellingType postTest = new PostTestCounsellingType();
         return postTest;
     }
-    public IndexNotificationServicesType createIndexNotificationServices(List<Obs> obsList,Demographics pts){
-        IndexNotificationServicesType indexService=new IndexNotificationServicesType();
+
+    public IndexNotificationServicesType createIndexNotificationServices(List<Obs> obsList, Demographics pts) {
+        IndexNotificationServicesType indexService = new IndexNotificationServicesType();
         return indexService;
+    }
+    public KnowledgeAssessmentType createKnowledgeAssessmentType(List<Obs> obsList, Demographics pts){
+        /*
+           Previously tested HIV negative (165799)
+           Client Pregnant (Test and ensure linkage to PMTCT Program)(1434) 	
+           Client informed about HIV transmission routes (165801)	
+           Client informed about risk factors for HIV transmission (165802)	
+           Client informed on preventing HIV transmission methods (165804)	
+           Client informed about possible test results 	(165884)
+           Informed consent for HIV testing given (1710)
+         */
+        KnowledgeAssessmentType knowledgeAssessmentType=new KnowledgeAssessmentType();
+        int conceptID = 0, valueCoded = 0;
+        boolean ans=false;
+        if (!obsList.isEmpty()) {
+            for (Obs obs : obsList) {
+               conceptID=obs.getConceptID();
+               //valueCoded=obs.getValueCoded();
+               switch(conceptID){
+                   case 165799://Previously tested HIV negative
+                       valueCoded=obs.getValueCoded();
+                       ans=convertYesNoValueCodedToBoolean(valueCoded);
+                       knowledgeAssessmentType.setPreviouslyTestedHIVNegative(ans);
+                       break;
+                   case 1434://Client Pregnant (Test and ensure linkage to PMTCT Program)
+                       valueCoded=obs.getValueCoded();
+                       ans=convertYesNoValueCodedToBoolean(valueCoded);
+                       knowledgeAssessmentType.setClientPregnant(ans);
+                       break;
+                       
+                       
+               }
+            }
+        }
+
+        return knowledgeAssessmentType;
     }
 
 }
