@@ -167,10 +167,22 @@ public class NDRHIVTestingReportTypeDictionary {
             Index Relation Phone (166022)
          */
         PartnerNotificationType partnerNotification = null;
+        int conceptID = 0, valueCoded = 0;
+        String valueText = "";
+        Date valueDate = null;
+        double valueNumeric = 0.0;
+        CodedSimpleType cst = null;
         if (!obsList.isEmpty()) {
             partnerNotification = new PartnerNotificationType();
             for (Obs obs : obsList) {
-
+               conceptID=obs.getConceptID();
+               switch(conceptID){
+                   case 161135://Partner full name (161135)
+                       valueText=obs.getValueText();
+                       partnerNotification.setPartnername(valueText);
+                       break;
+                   case 
+               }
             }
         }
         return partnerNotification;
