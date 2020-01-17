@@ -1157,7 +1157,7 @@ public class DataPumpDao implements model.datapump.DataAccess {
                     container = NDRDictionary.createContainer(ipName, ipCode, "UPDATED");
                     ptsBiometricInfo = getBiometricInfoForPatient(patientID);
                     if (!ptsBiometricInfo.isEmpty()) {
-                        System.out.println("I contain something");
+                        //System.out.println("I contain something");
                         fingerPrintType = NDRDictionary.createFingerPrintType(ptsBiometricInfo);
                     }
                     individual = NDRDictionary.createIndividualReport();
@@ -7389,7 +7389,7 @@ public class DataPumpDao implements model.datapump.DataAccess {
             ps.setInt(1, patientID);
             rs = ps.executeQuery();
             while (rs.next()) {
-                System.out.println("I have gone crazy "+ rs.getInt("patient_Id"));
+                //System.out.println("I have gone crazy "+ rs.getInt("patient_Id"));
                 biometricInfoList.add(createBiometricInfo(rs));
             }
             cleanUp(rs, ps);
