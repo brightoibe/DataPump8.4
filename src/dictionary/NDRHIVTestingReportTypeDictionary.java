@@ -313,7 +313,7 @@ public class NDRHIVTestingReportTypeDictionary {
         return clinicalTBScreeningType;
     }
 
-    public SyndromicSTIScreeningType createSyndromicSTIScreeningType() {
+    public SyndromicSTIScreeningType createSyndromicSTIScreeningType(List<Obs> obsList, Demographics demo) {
         /*
             Syndromic STI Screening
             Complaints of vaginal discharge or burning when urinating? (165809) 	
@@ -322,7 +322,31 @@ public class NDRHIVTestingReportTypeDictionary {
             STI Screening Risk Score (165814)
          */
         SyndromicSTIScreeningType syndromicSTIScreeningType = null;
-
+        int conceptID = 0, valueCoded = 0;
+        boolean ans = false;
+        if(!obsList.isEmpty()){
+            syndromicSTIScreeningType=new SyndromicSTIScreeningType();
+            for(Obs obs: obsList){
+                conceptID=obs.getConceptID();
+                switch(conceptID){
+                    case 165809 ://Complaints of vaginal discharge or burning when urinating? (165809)
+                        valueCoded = obs.getValueCoded();
+                        ans = convertYesNoValueCodedToBoolean(valueCoded);
+                        syndromicSTIScreeningType.setVaginalDischargeOrBurningWhenUrinating(ans);
+                        break;
+                    case 165810 ://Complaints of lower abdominal pains with or without vaginal discharge (165810)
+                        valueCoded = obs.getValueCoded();
+                        ans = convertYesNoValueCodedToBoolean(valueCoded);
+                        syndromicSTIScreeningType.setLowerAbdominalPainsWithOrWithoutVaginalDischarge(ans);
+                        break;
+                    case 165813://Complaints of genital sore(s) or swollen inguinal lymph nodes with or without pains (165813)
+                        valueCoded = obs.getValueCoded();
+                        ans = convertYesNoValueCodedToBoolean(valueCoded);
+                        syndromicSTIScreeningType.setGenitalSoreOrSwollenInguinalLymphNodes(ans);
+                        break;
+                }
+            }
+        }
         return syndromicSTIScreeningType;
     }
 
