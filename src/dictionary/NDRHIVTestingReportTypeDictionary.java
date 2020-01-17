@@ -225,7 +225,7 @@ public class NDRHIVTestingReportTypeDictionary {
         if (!obsList.isEmpty()) {
             hivRiskAssessmentType = new HIVRiskAssessmentType();
             for (Obs obs : obsList) {
-                conceptID=obs.getConceptID();
+                conceptID = obs.getConceptID();
                 switch (conceptID) {
                     case 165800://Ever had sexual intercourse
                         valueCoded = obs.getValueCoded();
@@ -242,12 +242,17 @@ public class NDRHIVTestingReportTypeDictionary {
                         ans = convertYesNoValueCodedToBoolean(valueCoded);
                         hivRiskAssessmentType.setUnprotectedSexWithCasualPartnerinLast3Months(ans);
                         break;
+                    case 165803://Unprotected sex with regular partner in the last 3 months
+                        valueCoded = obs.getValueCoded();
+                        ans = convertYesNoValueCodedToBoolean(valueCoded);
+                        hivRiskAssessmentType.setUnprotectedSexWithRegularPartnerInLast3Months(ans);
+                        break;
                     case 164809://STI in last 3 months
                         valueCoded = obs.getValueCoded();
                         ans = convertYesNoValueCodedToBoolean(valueCoded);
                         hivRiskAssessmentType.setSTIInLast3Months(ans);
                         break;
-                    
+
                 }
             }
         }
