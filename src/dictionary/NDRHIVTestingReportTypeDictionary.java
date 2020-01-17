@@ -253,7 +253,7 @@ public class NDRHIVTestingReportTypeDictionary {
                         ans = convertYesNoValueCodedToBoolean(valueCoded);
                         hivRiskAssessmentType.setSTIInLast3Months(ans);
                         break;
-                    case  165806://More than 1 sex partner during last 3 months
+                    case 165806://More than 1 sex partner during last 3 months
                         valueCoded = obs.getValueCoded();
                         ans = convertYesNoValueCodedToBoolean(valueCoded);
                         hivRiskAssessmentType.setMoreThan1SexPartnerDuringLast3Months(ans);
@@ -265,8 +265,33 @@ public class NDRHIVTestingReportTypeDictionary {
         }
         return hivRiskAssessmentType;
     }
-    public ClinicalTBScreeningType createClinicalTBScreeningType(List<Obs> obsList, Demographics demo){
-        ClinicalTBScreeningType clinicalTBScreeningType=null;
+
+    public ClinicalTBScreeningType createClinicalTBScreeningType(List<Obs> obsList, Demographics demo) {
+        /*
+           //Client TB Screening 	
+           Current Cough 143264) 		
+           Weight Loss (832)	
+           Fever (140238)	
+           Night sweats (133027) 		
+           Contact with TB+ patient (124068) 		
+           TB Screening Score  (165808) 	
+         */
+        ClinicalTBScreeningType clinicalTBScreeningType = null;
+        int conceptID = 0, valueCoded = 0;
+        boolean ans = false;
+        if (!obsList.isEmpty()) {
+            clinicalTBScreeningType = new ClinicalTBScreeningType();
+            for (Obs obs : obsList) {
+                conceptID = obs.getConceptID();
+                switch (conceptID) {
+                    case 143264:// Current Cough 143264) 
+                    valueCoded = obs.getValueCoded();
+                    ans = convertYesNoValueCodedToBoolean(valueCoded); 
+                    clinicalTBScreeningType.setCurrentlyCough(ans);
+                    break;
+                }
+            }
+        }
         return clinicalTBScreeningType;
     }
 
