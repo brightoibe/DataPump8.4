@@ -12,6 +12,7 @@ import com.inductivehealth.ndr.schema.HIVRiskAssessmentType;
 import com.inductivehealth.ndr.schema.HIVTestResultType;
 import com.inductivehealth.ndr.schema.IndexNotificationServicesType;
 import com.inductivehealth.ndr.schema.KnowledgeAssessmentType;
+import com.inductivehealth.ndr.schema.PartnerNotificationType;
 import com.inductivehealth.ndr.schema.PostTestCounsellingType;
 import com.inductivehealth.ndr.schema.PreTestInformationType;
 import com.inductivehealth.ndr.schema.RecencyTestingType;
@@ -149,6 +150,10 @@ public class NDRHIVTestingReportTypeDictionary {
     public IndexNotificationServicesType createIndexnotificationServiceType(){
         IndexNotificationServicesType indexNotofication=null;
         return indexNotofication;
+    }
+    public PartnerNotificationType createPartnerNotificationType(){
+        PartnerNotificationType partnerNotification=null;
+        return partnerNotification;
     }
     public TestResultType createTestResultType(List<Obs> obsList, Demographics pts) throws DatatypeConfigurationException {
         TestResultType testResultType = null;
