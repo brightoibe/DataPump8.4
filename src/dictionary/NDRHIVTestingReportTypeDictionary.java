@@ -18,13 +18,17 @@ import com.inductivehealth.ndr.schema.PreTestInformationType;
 import com.inductivehealth.ndr.schema.RecencyTestingType;
 import com.inductivehealth.ndr.schema.SyndromicSTIScreeningType;
 import com.inductivehealth.ndr.schema.TestResultType;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import javax.xml.datatype.DatatypeConfigurationException;
 import model.datapump.Demographics;
 import model.datapump.Obs;
+import util.NDRCommonUtills;
 
 /**
  *
@@ -120,8 +124,8 @@ public class NDRHIVTestingReportTypeDictionary {
         ndrCodingMap.put(165852, "R");// Recent -> Recent (165852)
         ndrCodingMap.put(165851, "L");//Long Term -> Long Term (165851)
         //Partner Gender
-        ndrCodingMap.put(165184,"M");//Male
-        ndrCodingMap.put(165185,"F");//Female
+        ndrCodingMap.put(165184, "M");//Male
+        ndrCodingMap.put(165185, "F");//Female
 
     }
 
@@ -151,12 +155,43 @@ public class NDRHIVTestingReportTypeDictionary {
         return hivTestResultType;
     }
 
-    public IndexNotificationServicesType createIndexnotificationServiceType() {
-        IndexNotificationServicesType indexNotofication = null;
+    public IndexNotificationServicesType createIndexnotificationServiceType(List<Obs> obsList, Date visitDate, Demographics pts) {
+        /*
+           Grouping Concept ID: Partner Elicitation (165858)
+           List<Obs> obsListForOIProphylaxis = NDRCommonUtills.getAllObsWithConceptForList(165726, visitDate, obsList);// Retrieve all Group concept obs (Drugs for OI Prophylaxis)
+        Set<Integer> obsIDSet = new HashSet<Integer>();
+        for (Obs ele : obsListForOIProphylaxis) {
+            obsIDSet.add(ele.getObsID());
+        }
+        for (Integer eleInt : obsIDSet) {
+            oiDrugsObsList = NDRCommonUtills.getAllObsForConceptFromListWithGroupID(obsList, eleInt);
+            regimenType = converterToOIRegimenType(oiDrugsObsList, visitDate, pts, obsList);
+            regimenTypeList.add(regimenType);
+        }
+         */
+         IndexNotificationServicesType indexNotofication = null;
+        if (!obsList.isEmpty()) {
+            indexNotofication=new IndexNotificationServicesType();
+            List<Obs> obsListForPartnerElicitation = NDRCommonUtills.getAllObsWithConceptForList(165858, visitDate, obsList);// Retrieve all Group concept obs (Partner Elicitation (165858))
+            List<Obs> obsListForPartnerTesting = null;
+            List<PartnerNotificationType> partnerNotificationTypeList = new ArrayList<>();
+            PartnerNotificationType partnerNotification = null;
+            Set<Integer> obsIDSet = new HashSet<Integer>();
+            for (Obs ele : obsListForPartnerElicitation) {
+                obsIDSet.add(ele.getObsID());
+            }
+            for (Integer eleInt : obsIDSet) {
+                obsListForPartnerTesting = NDRCommonUtills.getAllObsForConceptFromListWithGroupID(obsList, eleInt);
+                partnerNotification = createPartnerNotificationType(obsListForPartnerTesting, visitDate, pts);
+                partnerNotificationTypeList.add(partnerNotification);
+            }
+            indexNotofication.getPartner().addAll(partnerNotificationTypeList);
+        }
+       
         return indexNotofication;
     }
 
-    public PartnerNotificationType createPartnerNotificationType(List<Obs> obsList, Demographics pts) {
+    public PartnerNotificationType createPartnerNotificationType(List<Obs> obsList, Date visitDate, Demographics pts) {
         /*
             Partner full name (161135) 
             Partner Gender (165857) 
@@ -178,31 +213,31 @@ public class NDRHIVTestingReportTypeDictionary {
         if (!obsList.isEmpty()) {
             partnerNotification = new PartnerNotificationType();
             for (Obs obs : obsList) {
-               conceptID=obs.getConceptID();
-               switch(conceptID){
-                   case 161135://Partner full name (161135)
-                       valueText=obs.getValueText();
-                       partnerNotification.setPartnername(valueText);
-                       break;
-                   case 165857://Partner Gender (165857) 
-                       valueCoded=obs.getValueCoded();
-                       partnerNotification.setPartnerGender(getNDRCodedValue(valueCoded));
-                       break;
-                   case 165798://Index type (165798) 
-                       valueCoded=obs.getValueCoded();
-                       partnerNotification.setIndexRelation(getNDRCodedValue(valueCoded));
-                       break;
-                   case 166021://Index Descriptive Address (166021) 
-                       valueText=obs.getValueText();
-                       partnerNotification.setDescriptiveAddress(valueText);
-                       break;
-                   case 166022://Index Relation Phone (166022)
-                       valueText=obs.getValueText();
-                       partnerNotification.setPhoneNumber(valueText);
-                       break;
-                   default:
-                       break;
-               }
+                conceptID = obs.getConceptID();
+                switch (conceptID) {
+                    case 161135://Partner full name (161135)
+                        valueText = obs.getValueText();
+                        partnerNotification.setPartnername(valueText);
+                        break;
+                    case 165857://Partner Gender (165857) 
+                        valueCoded = obs.getValueCoded();
+                        partnerNotification.setPartnerGender(getNDRCodedValue(valueCoded));
+                        break;
+                    case 165798://Index type (165798) 
+                        valueCoded = obs.getValueCoded();
+                        partnerNotification.setIndexRelation(getNDRCodedValue(valueCoded));
+                        break;
+                    case 166021://Index Descriptive Address (166021) 
+                        valueText = obs.getValueText();
+                        partnerNotification.setDescriptiveAddress(valueText);
+                        break;
+                    case 166022://Index Relation Phone (166022)
+                        valueText = obs.getValueText();
+                        partnerNotification.setPhoneNumber(valueText);
+                        break;
+                    default:
+                        break;
+                }
             }
         }
         return partnerNotification;
