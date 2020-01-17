@@ -5,7 +5,9 @@
  */
 package dictionary;
 
+import com.inductivehealth.ndr.client.Client;
 import com.inductivehealth.ndr.schema.ClinicalTBScreeningType;
+import com.inductivehealth.ndr.schema.CodedSimpleType;
 import com.inductivehealth.ndr.schema.HIVRiskAssessmentType;
 import com.inductivehealth.ndr.schema.HIVTestResultType;
 import com.inductivehealth.ndr.schema.IndexNotificationServicesType;
@@ -18,6 +20,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.xml.datatype.DatatypeConfigurationException;
 import model.datapump.Demographics;
 import model.datapump.Obs;
 
@@ -58,7 +61,11 @@ public class NDRHIVTestingReportTypeDictionary {
     public NDRHIVTestingReportTypeDictionary() {
         loadDictionary();
     }
-
+    public String getNDRCodedValue(int valueCoded){
+        String code=ndrCodingMap.get(valueCoded);
+        return code;
+        
+    }
     private void loadDictionary() {
         ndrCodingMap = new HashMap<Integer, String>();
         //Setting
@@ -105,6 +112,11 @@ public class NDRHIVTestingReportTypeDictionary {
         ndrCodingMap.put(703, "Pos");//Positive
         ndrCodingMap.put(664, "Neg");//Negative 
         //HCVTestResult (Same as HBVTestResult)
+        //Rapid recency assay (165853)
+        ndrCodingMap.put(165852, "R");// Recent -> Recent (165852)
+        ndrCodingMap.put(165851,"L");//Long Term -> Long Term (165851)
+
+
 
     }
 
@@ -133,7 +145,7 @@ public class NDRHIVTestingReportTypeDictionary {
         HIVTestResultType hivTestResultType = new HIVTestResultType();
         return hivTestResultType;
     }
-    public RecencyTestingType createRecencyTestingType(List<Obs> obsList, Demographics pts){
+    public RecencyTestingType createRecencyTestingType(List<Obs> obsList, Demographics pts) throws DatatypeConfigurationException{
         /*
             	HIV Recency Test Name (165849) 	
                 HIV Recency Test Date (165850)
@@ -151,6 +163,7 @@ public class NDRHIVTestingReportTypeDictionary {
         int conceptID = 0, valueCoded = 0;
         String valueText="";
         Date valueDate=null;
+        CodedSimpleType cst=null;
         if(!obsList.isEmpty()){
             recencyTestResultType=new RecencyTestingType();
             for(Obs obs: obsList){
@@ -160,6 +173,21 @@ public class NDRHIVTestingReportTypeDictionary {
                         valueText=obs.getValueText();
                         recencyTestResultType.setTestName(valueText);
                         break;
+                    case 165850://HIV Recency Test Date (165850)
+                        valueDate=obs.getValueDate();
+                        recencyTestResultType.setTestDate(Client.getXmlDate(valueDate));
+                        break;
+                    case 165853://Rapid recency assay (165853) 
+                        valueCoded=obs.getValueCoded();
+                        recencyTestResultType.setRapidRecencyAssay(getNDRCodedValue(valueCoded));
+                        break;
+                    case 165854://Sample test date (165854)
+                        valueDate=obs.getValueDate();
+                        recencyTestResultType.setViralLoadConfirmationTestDate(Client.getXmlDate(valueDate));
+                        break;
+                        
+                        
+              
                 }
             }
         }
