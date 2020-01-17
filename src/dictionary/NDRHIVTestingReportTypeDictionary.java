@@ -171,6 +171,15 @@ public class NDRHIVTestingReportTypeDictionary {
                        ans=convertYesNoValueCodedToBoolean(valueCoded);
                        knowledgeAssessmentType.setClientInformedAboutHIVTransmissionRoutes(ans);
                        break;
+                   case 165802://Client informed about risk factors for HIV transmission
+                       valueCoded=obs.getValueCoded();
+                       ans=convertYesNoValueCodedToBoolean(valueCoded);
+                       knowledgeAssessmentType.setClientInformedOfHIVTransmissionRiskFactors(ans);
+                       break;
+                   case 165804://Client informed on preventing HIV transmission methods
+                       
+                    
+                       
                    
                        
                        
