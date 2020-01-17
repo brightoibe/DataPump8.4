@@ -188,6 +188,10 @@ public class NDRHIVTestingReportTypeDictionary {
                        valueCoded=obs.getValueCoded();
                        partnerNotification.setPartnerGender(getNDRCodedValue(valueCoded));
                        break;
+                   case 165798://Index type (165798) 
+                       valueCoded=obs.getValueCoded();
+                       partnerNotification.setIndexRelation(getNDRCodedValue(valueCoded));
+                       break;
                }
             }
         }
