@@ -284,11 +284,16 @@ public class NDRHIVTestingReportTypeDictionary {
             for (Obs obs : obsList) {
                 conceptID = obs.getConceptID();
                 switch (conceptID) {
-                    case 143264:// Current Cough 143264) 
-                    valueCoded = obs.getValueCoded();
-                    ans = convertYesNoValueCodedToBoolean(valueCoded); 
-                    clinicalTBScreeningType.setCurrentlyCough(ans);
-                    break;
+                    case 143264:// Current Cough 143264 
+                        valueCoded = obs.getValueCoded();
+                        ans = convertYesNoValueCodedToBoolean(valueCoded);
+                        clinicalTBScreeningType.setCurrentlyCough(ans);
+                        break;
+                    case 832:// Weight Loss 
+                        valueCoded = obs.getValueCoded();
+                        ans = convertYesNoValueCodedToBoolean(valueCoded);
+                        clinicalTBScreeningType.setWeightLoss(ans);
+                        break;
                 }
             }
         }
