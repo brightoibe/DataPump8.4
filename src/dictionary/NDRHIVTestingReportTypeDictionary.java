@@ -119,6 +119,9 @@ public class NDRHIVTestingReportTypeDictionary {
         //Rapid recency assay (165853)
         ndrCodingMap.put(165852, "R");// Recent -> Recent (165852)
         ndrCodingMap.put(165851, "L");//Long Term -> Long Term (165851)
+        //Partner Gender
+        ndrCodingMap.put(165184,"M");//Male
+        ndrCodingMap.put(165185,"F");//Female
 
     }
 
@@ -181,7 +184,10 @@ public class NDRHIVTestingReportTypeDictionary {
                        valueText=obs.getValueText();
                        partnerNotification.setPartnername(valueText);
                        break;
-                   case 
+                   case 165857://Partner Gender (165857) 
+                       valueCoded=obs.getValueCoded();
+                       partnerNotification.setPartnerGender(getNDRCodedValue(valueCoded));
+                       break;
                }
             }
         }
