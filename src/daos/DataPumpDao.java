@@ -172,6 +172,7 @@ public class DataPumpDao implements model.datapump.DataAccess {
 
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
+            //Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
             ans = true;
             screen.updateStatus("Mysql jdbc driver loaded......");
         } catch (ClassNotFoundException e) {
@@ -197,8 +198,9 @@ public class DataPumpDao implements model.datapump.DataAccess {
     public boolean connect(model.datapump.DBConnection con) {
         boolean ans;
         try {
-            String conString = "jdbc:mysql://" + con.getHostName() + ":" + con.getMysqlPort() + "/" + con.getDatabase() + "?user=" + con.getUsername() + "&password=" + con.getPassword();
-            connection = DriverManager.getConnection(conString);
+            //String conString = "jdbc:mysql://" + con.getHostName() + ":" + con.getMysqlPort() + "/" + con.getDatabase() + "?user=" + con.getUsername() + "&password=" + con.getPassword();
+            String conString = "jdbc:mysql://" + con.getHostName() + ":" + con.getMysqlPort()  + "/" + con.getDatabase() ;
+            connection = DriverManager.getConnection(conString,con.getUsername(),con.getPassword());
             ans = true;
             connection.setAutoCommit(false);
         } catch (SQLException ex) {
